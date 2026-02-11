@@ -12,5 +12,7 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.useFlatConfig": true
+  "eslint.useFlatConfig": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative"
 }

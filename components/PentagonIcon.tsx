@@ -1,22 +1,22 @@
-type PentagonIconColor = 'sky' | 'green';
+type PentagonIconColor = 'blue' | 'green';
 
 const FILL_MAP: Record<PentagonIconColor, string> = {
-  sky: '#e0f2fe',
+  blue: '#e0f2fe',
   green: '#dcfce7',
 };
 
 const STROKE_MAP: Record<PentagonIconColor, string> = {
-  sky: '#0ea5e9',
+  blue: '#0ea5e9',
   green: '#22c55e',
 };
 
 type Props = {
-  color?: PentagonIconColor;
+  color: PentagonIconColor;
 };
 
 const PentagonIcon = (props: Props): React.JSX.Element => {
   // PROPS
-  const { color = 'sky' } = props;
+  const { color } = props;
 
   // VARS
   const fillColor = FILL_MAP[color];
