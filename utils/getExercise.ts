@@ -28,7 +28,7 @@ const getStep = (classLevel: ClassLevel): number => {
 const getNrOfSteps = (classLevel: ClassLevel): number => {
   const [start, end] = classLevelConfig[classLevel].nrOfStepsRange;
   const delta = end - start;
-  return Math.floor(Math.random() * delta) + start; // 3..9
+  return Math.floor(Math.random() * delta) + start; // 2..9
 };
 
 const getStartNumber = (classLevel: ClassLevel, step: number): number => {
