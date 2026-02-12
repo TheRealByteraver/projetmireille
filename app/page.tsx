@@ -1,37 +1,70 @@
 'use client';
+import Button from '@/components/Button';
 import LineGraphExercise from '@/components/LineGraphExercise';
 import { Exercise } from '@/types/frontend';
 import { getExercise } from '@/utils/getExercise';
 import { useState } from 'react';
 
-const DEFAULT_EXERCISES: Exercise[] = [
-  { startNumber: 100, step: 10, questionPosition: 1, nrOfSteps: 1 },
-  { startNumber: 500, step: 50, questionPosition: 1, nrOfSteps: 1 },
+type ExerciseConfig = {
+  id: number;
+  exercise: Exercise;
+  color: 'blue' | 'green';
+  isSolutionVisible: boolean;
+};
+
+const DEFAULT_EXERCISES: ExerciseConfig[] = [
+  {
+    id: 1,
+    exercise: { startNumber: 100, step: 10, questionPosition: 1, nrOfSteps: 9 },
+    color: 'blue',
+    isSolutionVisible: false,
+  },
+  {
+    id: 2,
+    exercise: { startNumber: 500, step: 50, questionPosition: 1, nrOfSteps: 1 },
+    color: 'green',
+    isSolutionVisible: false,
+  },
 ];
 
 const Home = (): React.JSX.Element => {
   // STATE
-  const [exercises, setExercises] = useState<Exercise[]>(DEFAULT_EXERCISES);
-  // console.log('exercises:', exercises);
+  const [exercises, setExercises] = useState<ExerciseConfig[]>(DEFAULT_EXERCISES);
+
+  // METHODS
+  const showSolution = (id: number): void =>
+    setExercises((prev) =>
+      prev.map((exercise) => (exercise.id === id ? { ...exercise, isSolutionVisible: true } : exercise)),
+    );
+
+  const showAllSolutions = (): void =>
+    setExercises((prev) => prev.map((exercise) => ({ ...exercise, isSolutionVisible: true })));
+
+  const nextExercises = (): void => {
+    setExercises([
+      { id: 1, exercise: getExercise('CE1'), color: 'blue', isSolutionVisible: false },
+      { id: 2, exercise: getExercise('CE2'), color: 'green', isSolutionVisible: false },
+    ]);
+  };
 
   return (
     <>
-      <div className="flex justify-start flex-row">
-        {exercises.length >= 2 && (
-          <>
-            <LineGraphExercise exercise={exercises[0]} color="blue" />
-            <LineGraphExercise exercise={exercises[1]} color="green" />
-          </>
-        )}
+      <div className="flex justify-start flex-col gap-8 mt-12">
+        {exercises.length &&
+          exercises.map(({ id, exercise, isSolutionVisible, color }) => (
+            <LineGraphExercise
+              key={id}
+              exercise={exercise}
+              isSolutionVisible={isSolutionVisible}
+              color={color}
+              showSolution={() => showSolution(id)}
+            />
+          ))}
       </div>
-      <button
-        className={
-          'py-1 px-2 ml-10 mt-4 border-2 bg-green-600 text-white border-green-600 rounded-md hover:cursor-pointer'
-        }
-        onClick={() => setExercises([getExercise('CE1'), getExercise('CE2')])}
-      >
-        Next
-      </button>
+      <div className="ml-10 mt-8 flex gap-4">
+        <Button text="Nouveau" onClick={nextExercises} />
+        <Button text="Solutions" color="green" onClick={showAllSolutions} />
+      </div>
     </>
   );
 };

@@ -1,24 +1,17 @@
-'use client';
-
-import { useState } from 'react';
 import PentagonIcon from './PentagonIcon';
 import { Exercise } from '@/types/frontend';
 
 type Props = {
   exercise: Exercise;
   color: 'green' | 'blue';
+  isSolutionVisible: boolean;
+  showSolution: () => void;
 };
 
 const LineGraphExercise = (props: Props): React.JSX.Element => {
   // PROPS
-  const { exercise, color } = props;
+  const { exercise, color, isSolutionVisible, showSolution } = props;
   const { startNumber, questionPosition, nrOfSteps, step } = exercise;
-
-  // STATE
-  const [isSolutionVisible, setIsSolutionVisible] = useState(false);
-
-  // METHODS
-  const handleClick = () => setIsSolutionVisible(true);
 
   // VARS
   const endNumber = startNumber + (nrOfSteps + 1) * step;
@@ -43,14 +36,24 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
         {Array.from({ length: nrOfSteps - 1 }, (_, i) => (
           <li key={i} className={`border-x-[1.5px] border-b-3 ${twColors[color].borderColor} flex-1 relative`}>
             {i + 1 === questionPosition && (
-              <Icon isSolutionVisible={isSolutionVisible} solution={solution} handleClick={handleClick} color={color} />
+              <Icon
+                isSolutionVisible={isSolutionVisible}
+                solution={solution}
+                handleClick={showSolution}
+                color={color}
+              />
             )}
           </li>
         ))}
         <li className={`border-l-[1.5px] border-r-3 border-b-3 ${twColors[color].borderColor} flex-1 relative`}>
           <>
             {questionPosition === nrOfSteps && (
-              <Icon isSolutionVisible={isSolutionVisible} solution={solution} handleClick={handleClick} color={color} />
+              <Icon
+                isSolutionVisible={isSolutionVisible}
+                solution={solution}
+                handleClick={showSolution}
+                color={color}
+              />
             )}
             <div
               className={
