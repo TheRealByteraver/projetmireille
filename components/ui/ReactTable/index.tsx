@@ -1,6 +1,5 @@
 // markup from https://tailwindcss.com/plus/ui-blocks/application-ui/lists/tables, 'table with sticky headers'
 
-import Button from '@/components/ui/Button';
 import {
   ColumnDef,
   flexRender,
