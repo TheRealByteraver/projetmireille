@@ -40,7 +40,7 @@ const ReactTable = <T,>(props: Props<T>): React.JSX.Element => {
   const classNames = (...classes: string[]): string => classes.filter(Boolean).join(' ');
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 border border-gray-300 rounded-md">
+    <div className="px-4 sm:px-6 lg:px-8 border border-gray-300 rounded-md pb-1">
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle">
@@ -53,13 +53,14 @@ const ReactTable = <T,>(props: Props<T>): React.JSX.Element => {
                       {headers.map((header, index) => {
                         const isFirstHeader = index === 0;
                         const isLastHeader = index === headers.length - 1;
-                        const commonHeaderClass = 'sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5';
+                        const commonHeaderClass =
+                          'uppercase sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5';
                         const textClass =
                           'text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter';
                         const specificHeaderClass = isFirstHeader
                           ? 'pr-3 pl-4 sm:pl-6 lg:pl-8 ' + textClass
                           : isLastHeader
-                            ? 'pr-4 pl-3 backdrop-blur-sm backdrop-filter sm:pr-6 lg:pr-8'
+                            ? 'pr-4 pl-3 backdrop-blur-sm backdrop-filter sm:pr-6 lg:pr-8 text-sm '
                             : 'px-3 ' + textClass;
 
                         return (

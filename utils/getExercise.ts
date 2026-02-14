@@ -1,4 +1,5 @@
-import { ClassLevel, Exercise } from '@/types/frontend';
+import { ClassLevel } from '@/types/apiTypes';
+import { LineGraphExercise } from '@/types/frontend';
 
 type ExerciseConfig = {
   startValueRange: number[];
@@ -38,7 +39,7 @@ const getStartNumber = (classLevel: ClassLevel, step: number): number => {
   return classLevelConfig[classLevel].startValueRange[0] + Math.floor(Math.random() * rndMult + 1) * step;
 };
 
-const getExercise = (classLevel: ClassLevel): Exercise => {
+const getExercise = (classLevel: ClassLevel): LineGraphExercise => {
   const step = getStep(classLevel);
   const nrOfSteps = getNrOfSteps(classLevel);
   const startNumber = getStartNumber(classLevel, step);
@@ -49,6 +50,8 @@ const getExercise = (classLevel: ClassLevel): Exercise => {
     step,
     questionPosition,
     nrOfSteps: nrOfSteps,
+    level: classLevel,
+    difficulty: 'easy', // TODO
   };
 };
 

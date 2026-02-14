@@ -1,49 +1,18 @@
+import { ExerciseList } from '@/types/apiTypes';
 import { createColumnHelper } from '@tanstack/react-table';
 
-// Define your row shape
-type Person = {
-  firstName: string;
-  lastName: string;
-  age: number;
-  visits: number;
-  status: string;
-  progress: number;
-};
-
-const columnHelper = createColumnHelper<Person>();
+const columnHelper = createColumnHelper<ExerciseList>();
 
 const columns = [
-  columnHelper.display({
-    id: 'actions',
+  columnHelper.accessor('id', {
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('firstName', {
+  columnHelper.accessor('name', {
+    header: () => 'Nom',
     cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
   }),
-  columnHelper.accessor((row) => row.lastName, {
-    id: 'lastName',
-    cell: (info) => info.getValue(),
-    header: () => <span>Last Name</span>,
-    footer: (props) => props.column.id,
-  }),
-  columnHelper.accessor('age', {
-    header: () => 'Age',
-    footer: (props) => props.column.id,
-  }),
-  columnHelper.accessor('visits', {
-    header: () => <span>Visits</span>,
-    footer: (props) => props.column.id,
-  }),
-  columnHelper.accessor('status', {
-    header: 'Status',
-    footer: (props) => props.column.id,
-  }),
-  columnHelper.accessor('progress', {
-    header: 'Profile Progress',
-    footer: (props) => props.column.id,
-  }),
-];
+]; // as ColumnDef<ExerciseList>[];
+
 // const columns = [
 //   // Display Column
 //   columnHelper.display({

@@ -1,5 +1,5 @@
 import PentagonIcon from './ui/PentagonIcon';
-import { Exercise } from '@/types/frontend';
+import { LineGraphExercise as LineGraphExerciseType } from '@/types/frontend';
 
 const twColors = {
   blue: { textColor: 'text-sky-500', borderColor: 'border-sky-500' },
@@ -9,7 +9,7 @@ const twColors = {
 type LineGraphExerciseColor = 'blue' | 'green';
 
 type Props = {
-  exercise: Exercise;
+  exercise: LineGraphExerciseType;
   color: LineGraphExerciseColor;
   isSolutionVisible: boolean;
   showSolution: () => void;

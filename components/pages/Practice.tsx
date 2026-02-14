@@ -1,14 +1,14 @@
 'use client';
 import Button from '@/components/ui/Button';
 import LineGraphExercise, { LineGraphExerciseColor } from '@/components/LineGraphExercise';
-import { Exercise } from '@/types/frontend';
 import { getExercise } from '@/utils/getExercise';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { LineGraphExercise as LineGraphExerciseType } from '@/types/frontend';
 
 type ExerciseConfig = {
   id: number;
-  exercise: Exercise;
+  exercise: LineGraphExerciseType;
   color: LineGraphExerciseColor;
   isSolutionVisible: boolean;
 };
@@ -16,13 +16,13 @@ type ExerciseConfig = {
 const DEFAULT_EXERCISES: ExerciseConfig[] = [
   {
     id: 1,
-    exercise: { startNumber: 10000, step: 10, questionPosition: 1, nrOfSteps: 9 },
+    exercise: { startNumber: 10000, step: 10, questionPosition: 1, nrOfSteps: 9, level: 'CE1', difficulty: 'easy' },
     color: 'blue',
     isSolutionVisible: false,
   },
   {
     id: 2,
-    exercise: { startNumber: 500, step: 50, questionPosition: 1, nrOfSteps: 1 },
+    exercise: { startNumber: 500, step: 50, questionPosition: 1, nrOfSteps: 1, level: 'CE2', difficulty: 'easy' },
     color: 'green',
     isSolutionVisible: false,
   },

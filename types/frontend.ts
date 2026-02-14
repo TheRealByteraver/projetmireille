@@ -1,10 +1,12 @@
-type Exercise = {
+import { ClassLevel, Difficulty } from '@/types/apiTypes';
+
+type LineGraphExercise = {
   startNumber: number;
   step: number;
   questionPosition: number;
   nrOfSteps: number;
+  level: ClassLevel;
+  difficulty: Difficulty;
 };
 
-type ClassLevel = 'CE1' | 'CE2';
-
-export type { Exercise, ClassLevel };
+export type { LineGraphExercise };
