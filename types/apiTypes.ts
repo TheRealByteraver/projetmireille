@@ -5,7 +5,7 @@ type ClassLevel = 'CE1' | 'CE2';
 type Difficulty = 'easy' | 'medium' | 'hard';
 type ExerciseType = 'lineGraph'; // TODO: add other exercise type definitions
 
-type User = {
+type ApiUser = {
   id: number;
   lastName: string;
   firstName: string;
@@ -15,8 +15,8 @@ type User = {
   level?: ClassLevel;
   // TODO: add practice level
   // email: string;
-  // createdAt: Date;
-  // updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
 type Exercise = {
@@ -24,13 +24,13 @@ type Exercise = {
   exerciseData: LineGraphExercise; // TODO: add other exercise type definitions as needed
 };
 
-type ExerciseList = {
+type ApiExerciseList = {
   id: number;
   name: string;
   userID: number; // creator / owner
   exercises: Exercise[];
-  // createdAt: Date;
-  // updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
-export type { User, Exercise, ExerciseList, ClassLevel, Difficulty };
+export type { ApiUser, Exercise, ApiExerciseList, ClassLevel, Difficulty, Role };

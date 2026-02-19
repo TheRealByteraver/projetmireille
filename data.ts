@@ -1,6 +1,6 @@
-import { ExerciseList } from '@/types/apiTypes';
+import { ApiExerciseList, ApiUser } from '@/types/apiTypes';
 
-const users = [
+const users: ApiUser[] = [
   {
     id: 1,
     lastName: '',
@@ -8,6 +8,8 @@ const users = [
     username: 'mireille',
     password: 'mireille',
     roles: ['admin'],
+    createdAt: 'Sun, 15 Feb 2026 09:33:27 GMT',
+    updatedAt: 'Sun, 15 Feb 2026 09:33:27 GMT',
   },
   {
     id: 2,
@@ -16,6 +18,8 @@ const users = [
     username: 'erland',
     password: 'erland',
     roles: ['teacher'],
+    createdAt: 'Sun, 15 Feb 2026 09:33:27 GMT',
+    updatedAt: 'Sun, 15 Feb 2026 09:33:27 GMT',
   },
   {
     id: 3,
@@ -24,14 +28,18 @@ const users = [
     username: 'julie',
     password: 'julie',
     roles: ['student'],
+    createdAt: 'Sun, 15 Feb 2026 09:33:27 GMT',
+    updatedAt: 'Sun, 15 Feb 2026 09:33:27 GMT',
   },
 ];
 
-const exerciseList: ExerciseList[] = [
+const exerciseList: ApiExerciseList[] = [
   {
     id: 1,
     name: 'liste pour les CE1',
     userID: 1,
+    createdAt: 'Sun, 15 Feb 2026 09:33:27 GMT',
+    updatedAt: 'Sun, 15 Feb 2026 09:33:27 GMT',
     exercises: [
       {
         exerciseType: 'lineGraph',
@@ -135,6 +143,8 @@ const exerciseList: ExerciseList[] = [
     id: 2,
     name: 'liste CE2',
     userID: 1,
+    createdAt: 'Sun, 15 Feb 2026 09:33:27 GMT',
+    updatedAt: 'Sun, 15 Feb 2026 09:33:27 GMT',
     exercises: [
       {
         exerciseType: 'lineGraph',

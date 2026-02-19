@@ -1,15 +1,37 @@
-import { ExerciseList } from '@/types/apiTypes';
+import TextButton from '@/components/ui/TextButton';
+import { ApiExerciseList } from '@/types/apiTypes';
 import { createColumnHelper } from '@tanstack/react-table';
 
-const columnHelper = createColumnHelper<ExerciseList>();
+const columnHelper = createColumnHelper<ApiExerciseList>();
 
 const columns = [
   columnHelper.accessor('id', {
-    cell: (info) => info.getValue(),
+    cell: (info) => <div className="text-left">{info.getValue()}</div>,
   }),
   columnHelper.accessor('name', {
     header: () => 'Nom',
     cell: (info) => info.getValue(),
+  }),
+  columnHelper.display({
+    id: 'Level',
+    header: () => 'Niveaux',
+    cell: (info) => {
+      const levels: string[] = info.row.original.exercises.reduce(
+        (prev, next) => (prev.includes(next.exerciseData.level) ? [...prev] : [...prev, next.exerciseData.level]),
+        [] as string[],
+      );
+      return <span>{levels.join(', ')}</span>;
+    },
+  }),
+  columnHelper.display({
+    id: 'edit',
+    header: () => '',
+    cell: () => <TextButton color="indigo" text="Editer" />,
+  }),
+  columnHelper.display({
+    id: 'delete',
+    header: () => '',
+    cell: () => <TextButton color="yellow" text="Supprimer" />,
   }),
 ]; // as ColumnDef<ExerciseList>[];
 

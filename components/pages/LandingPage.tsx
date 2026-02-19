@@ -11,7 +11,8 @@ const LandingPage = (): React.JSX.Element => {
     <>
       <h1 className="text-5xl font-bold text-center text-gray-500 my-6">Projet Mireille</h1>
       <div className="w-full flex flex-col items-center">
-        <Image src="/home.jpg" width={878} height={878} alt="Project logo" loading="eager" />
+        {/* original size: 878x878 */}
+        <Image src="/home.jpg" width={600} height={600} alt="Project logo" loading="eager" />
         <div className="flex gap-4 mt-4">
           <Button onClick={() => router.push('/dashboard')} color="blue">
             Tableau de bord
