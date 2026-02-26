@@ -25,17 +25,15 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
   const solution = startNumber + questionPosition * step;
 
   return (
-    <div className="flex flex-col flex-1 pt-10 pb-6 overflow-hidden">
-      <ul className="flex flex-row px-6 h-5">
-        <li className={`border-l-3 border-r-[1.5px] border-b-3 ${twColors[color].borderColor} flex-1 relative`}>
-          <div
-            className={'mt-3 absolute -left-[1.5px] -translate-x-1/2 translate-y-1/2 flex justify-center items-center'}
-          >
+    <div className="flex flex-1 flex-col overflow-hidden pt-10 pb-6">
+      <ul className="flex h-5 flex-row px-6">
+        <li className={`border-r-2 border-b-4 border-l-4 ${twColors[color].borderColor} relative flex-1`}>
+          <div className={'absolute -left-0.5 mt-3 flex -translate-x-1/2 translate-y-1/2 items-center justify-center'}>
             {startNumber}
           </div>
         </li>
         {Array.from({ length: nrOfSteps - 1 }, (_, i) => (
-          <li key={i} className={`border-x-[1.5px] border-b-3 ${twColors[color].borderColor} flex-1 relative`}>
+          <li key={i} className={`border-x-2 border-b-4 ${twColors[color].borderColor} relative flex-1`}>
             {i + 1 === questionPosition && (
               <Icon
                 isSolutionVisible={isSolutionVisible}
@@ -46,7 +44,7 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
             )}
           </li>
         ))}
-        <li className={`border-l-[1.5px] border-r-3 border-b-3 ${twColors[color].borderColor} flex-1 relative`}>
+        <li className={`border-r-4 border-b-4 border-l-2 ${twColors[color].borderColor} relative flex-1`}>
           <>
             {questionPosition === nrOfSteps && (
               <Icon
@@ -58,7 +56,7 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
             )}
             <div
               className={
-                'mt-3 absolute left-[1.5px] translate-x-1/2 translate-y-1/2 w-full flex justify-center items-center'
+                'absolute left-0.5 mt-3 flex w-full translate-x-1/2 translate-y-1/2 items-center justify-center'
               }
             >
               {endNumber}
@@ -80,7 +78,7 @@ type IconProps = {
 const Icon = ({ isSolutionVisible, solution, handleClick, color }: IconProps): React.JSX.Element => (
   <>
     <div
-      className="absolute w-12 h-12 -left-[1.5px] -translate-x-1/2 bottom-2.5 hover:cursor-pointer"
+      className="absolute bottom-2.5 -left-0.5 h-12 w-12 -translate-x-1/2 hover:cursor-pointer"
       onClick={handleClick}
     >
       <PentagonIcon color={color} />
@@ -88,8 +86,8 @@ const Icon = ({ isSolutionVisible, solution, handleClick, color }: IconProps): R
     {isSolutionVisible && (
       <div
         className={
-          'absolute -left-[1.5px] -translate-x-1/2 translate-y-1/2 ' +
-          'mt-3 w-full flex justify-center items-center font-semibold ' +
+          'absolute -left-0.5 -translate-x-1/2 translate-y-1/2 ' +
+          'mt-3 flex w-full items-center justify-center font-semibold ' +
           twColors[color].textColor
         }
       >
