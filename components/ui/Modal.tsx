@@ -10,8 +10,8 @@ const Modal = (props: Props): React.JSX.Element => {
   return (
     <>
       {isOpen && (
-        <div className="absolute h-screen w-screen bg-black/50 p-8 z-11">
-          <div className="h-full w-full bg-white rounded-md">{children}</div>
+        <div className="absolute z-11 h-screen w-screen bg-black/50 p-8">
+          <div className="h-full w-full rounded-md bg-white">{children}</div>
         </div>
       )}
     </>
