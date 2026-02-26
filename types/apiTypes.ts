@@ -33,4 +33,4 @@ type ApiExerciseList = {
   updatedAt: string;
 };
 
-export type { ApiUser, Exercise, ApiExerciseList, ClassLevel, Difficulty, Role };
+export type { ApiUser, Exercise, ApiExerciseList, ClassLevel, Difficulty, Role, ExerciseType };

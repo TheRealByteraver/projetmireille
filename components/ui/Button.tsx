@@ -6,11 +6,12 @@ type Props = {
   color?: ButtonColors;
   className?: string;
   children: React.ReactNode;
+  type?: 'button' | 'submit' | 'reset';
 };
 
 const Button = (props: Props): React.JSX.Element => {
   // PROPS
-  const { onClick, color = 'white', className = '', children } = props;
+  const { onClick, color = 'white', className = '', children, type = 'button' } = props;
 
   // VARS
   const colors: Record<ButtonColors, string> = {
@@ -30,6 +31,7 @@ const Button = (props: Props): React.JSX.Element => {
         className,
       )}
       onClick={onClick}
+      type={type}
     >
       {children}
     </button>

@@ -12,12 +12,12 @@ type Props = {
   exercise: LineGraphExerciseType;
   color: LineGraphExerciseColor;
   isSolutionVisible: boolean;
-  showSolution: () => void;
+  showSolution?: () => void;
 };
 
 const LineGraphExercise = (props: Props): React.JSX.Element => {
   // PROPS
-  const { exercise, color, isSolutionVisible, showSolution } = props;
+  const { exercise, color, isSolutionVisible, showSolution = () => {} } = props;
   const { startNumber, questionPosition, nrOfSteps, step } = exercise;
 
   // VARS

@@ -16,10 +16,12 @@ const columns = [
     id: 'Level',
     header: () => 'Niveaux',
     cell: (info) => {
-      const levels: string[] = info.row.original.exercises.reduce(
-        (prev, next) => (prev.includes(next.exerciseData.level) ? [...prev] : [...prev, next.exerciseData.level]),
-        [] as string[],
-      );
+      // const levels: string[] = info.row.original.exercises.reduce(
+      //   (prev, next) => (prev.includes(next.exerciseData.level) ? [...prev] : [...prev, next.exerciseData.level]),
+      //   [] as string[],
+      // );
+      // console.log(info);
+      const levels = ['CE1', 'CE2'];
       return <span>{levels.join(', ')}</span>;
     },
   }),
