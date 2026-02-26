@@ -23,7 +23,7 @@ const CreateLineGraphExerciseForm = (props: Props): React.JSX.Element => {
       startNumber: 0,
       step: 1,
       questionPosition: 2,
-      nrOfSteps: 4,
+      nrOfSteps: 3,
       level: 'CE1',
       difficulty: 'easy',
     },
@@ -48,7 +48,7 @@ const CreateLineGraphExerciseForm = (props: Props): React.JSX.Element => {
             startNumber: Number(startNumber),
             step: Number(step),
             questionPosition: Number(questionPosition),
-            nrOfSteps: Number(nrOfSteps) - 1,
+            nrOfSteps: Number(nrOfSteps),
             level: 'CE1',
             difficulty: 'easy',
           }}

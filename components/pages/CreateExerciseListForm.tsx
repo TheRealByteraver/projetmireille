@@ -36,10 +36,10 @@ const CreateExerciseListForm = (): React.JSX.Element => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4 overflow-hidden">
+    <div className="flex h-full flex-col gap-4 overflow-hidden border-2 border-red-500">
       <h1 className="text-2xl font-bold">Créer une liste d&apos;exercices</h1>
-      <div className="flex h-full flex-col gap-4 overflow-hidden xl:flex-row">
-        <div className="flex h-full w-full flex-col gap-4">
+      <div className="flex h-full flex-col gap-4 overflow-auto xl:flex-row">
+        <div className="flex h-full w-full flex-col gap-4 overflow-auto">
           <div>
             <p className="mb-1 text-sm font-bold">Type d&apos;exercice</p>
             <Select value={selectedOption} onChange={handleChange} options={options} />

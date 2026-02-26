@@ -25,7 +25,7 @@ const Dashboard = (): React.JSX.Element => {
     <>
       {isModalOpen && (
         <Modal isOpen={isModalOpen}>
-          <div className="h-full w-full flex flex-col gap-4 p-4">
+          <div className="flex h-full w-full flex-col gap-4 overflow-hidden border-2 border-green-500 p-4">
             <CreateExerciseListForm />
             <Button className="ml-auto" onClick={() => setIsModalOpen(false)}>
               Close
@@ -33,9 +33,9 @@ const Dashboard = (): React.JSX.Element => {
           </div>
         </Modal>
       )}
-      <div className="h-screen w-screen flex flex-col justify-between pb-6">
-        <div className="w-full mt-8 px-4 flex flex-col gap-4">
-          <h1 className="text-2xl font-bold mb-4">Tableau de bord</h1>
+      <div className="flex h-screen w-screen flex-col justify-between pb-6">
+        <div className="mt-8 flex w-full flex-col gap-4 px-4">
+          <h1 className="mb-4 text-2xl font-bold">Tableau de bord</h1>
           <Button className="sm:mr-auto" color="green" onClick={() => setIsModalOpen(true)}>
             Creer une nouvelle série d&apos;exercises
           </Button>
