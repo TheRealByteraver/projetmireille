@@ -25,11 +25,7 @@ const Dashboard = (): React.JSX.Element => {
     <>
       {isModalOpen && (
         <Modal isOpen={isModalOpen}>
-          <div
-            className={
-              'h-full w-full overflow-auto border-2 border-green-500 p-4 xl:flex xl:flex-col xl:overflow-hidden'
-            }
-          >
+          <div className="h-full w-full overflow-auto p-4 xl:flex xl:flex-col xl:overflow-hidden">
             <CreateExerciseListForm />
             <Button className="float-right mt-4 xl:ml-auto" onClick={() => setIsModalOpen(false)}>
               Close

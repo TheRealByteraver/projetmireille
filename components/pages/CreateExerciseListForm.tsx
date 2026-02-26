@@ -36,11 +36,11 @@ const CreateExerciseListForm = (): React.JSX.Element => {
   };
 
   return (
-    <div className="border-2 border-red-500 xl:flex xl:h-full xl:flex-col xl:overflow-hidden">
+    <div className="xl:flex xl:h-full xl:flex-col xl:overflow-hidden">
       <h1 className="mb-4 text-2xl font-bold">Créer une liste d&apos;exercices</h1>
 
-      <div className="border-8 border-yellow-500 xl:flex xl:h-full xl:w-full xl:flex-row xl:gap-4 xl:overflow-hidden">
-        <div className="w-full border-8 border-blue-500 xl:flex xl:flex-col xl:overflow-auto">
+      <div className="xl:flex xl:h-full xl:w-full xl:flex-row xl:gap-4 xl:overflow-hidden">
+        <div className="w-full xl:flex xl:flex-col xl:overflow-auto">
           <div className="mb-6">
             <p className="mb-1 text-sm font-bold">Type d&apos;exercice</p>
             <Select value={selectedOption} onChange={handleChange} options={options} />
@@ -55,7 +55,7 @@ const CreateExerciseListForm = (): React.JSX.Element => {
           )}
         </div>
 
-        <div className="w-full border-8 border-blue-500 xl:flex xl:flex-col xl:overflow-auto">
+        <div className="w-full xl:flex xl:flex-col xl:overflow-auto">
           <p className="mb-1 text-sm font-bold">Liste d&apos;exercices</p>
 
           <ul className="rounded-md border border-gray-300 p-4 xl:flex xl:h-full xl:flex-col xl:overflow-auto">

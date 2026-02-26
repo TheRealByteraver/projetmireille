@@ -90,9 +90,11 @@ const CreateLineGraphExerciseForm = (props: Props): React.JSX.Element => {
           {...register('nrOfSteps', { required: true })}
         />
 
-        <Button className="mb-2 w-full sm:float-right sm:w-auto" color="green" type="submit">
-          Ajouter l&apos;exercice
-        </Button>
+        <div className="mb-2 flex w-full justify-end">
+          <Button className="w-full sm:w-auto" color="green" type="submit">
+            Ajouter l&apos;exercice
+          </Button>
+        </div>
       </form>
     </>
   );
