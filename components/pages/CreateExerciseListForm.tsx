@@ -36,11 +36,12 @@ const CreateExerciseListForm = (): React.JSX.Element => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4 overflow-hidden border-2 border-red-500">
-      <h1 className="text-2xl font-bold">Créer une liste d&apos;exercices</h1>
-      <div className="flex h-full flex-col gap-4 overflow-auto xl:flex-row">
-        <div className="flex h-full w-full flex-col gap-4 overflow-auto">
-          <div>
+    <div className="border-2 border-red-500 xl:flex xl:h-full xl:flex-col xl:overflow-hidden">
+      <h1 className="mb-4 text-2xl font-bold">Créer une liste d&apos;exercices</h1>
+
+      <div className="border-8 border-yellow-500 xl:flex xl:h-full xl:w-full xl:flex-row xl:gap-4 xl:overflow-hidden">
+        <div className="w-full border-8 border-blue-500 xl:flex xl:flex-col xl:overflow-auto">
+          <div className="mb-6">
             <p className="mb-1 text-sm font-bold">Type d&apos;exercice</p>
             <Select value={selectedOption} onChange={handleChange} options={options} />
           </div>
@@ -54,12 +55,12 @@ const CreateExerciseListForm = (): React.JSX.Element => {
           )}
         </div>
 
-        <div className="flex h-full w-full flex-col gap-1 overflow-hidden">
-          <p className="text-sm font-bold">Liste d&apos;exercices</p>
+        <div className="w-full border-8 border-blue-500 xl:flex xl:flex-col xl:overflow-auto">
+          <p className="mb-1 text-sm font-bold">Liste d&apos;exercices</p>
 
-          <ul className="flex h-full flex-col gap-4 overflow-auto rounded-md border border-gray-300 p-4">
+          <ul className="rounded-md border border-gray-300 p-4 xl:flex xl:h-full xl:flex-col xl:overflow-auto">
             {exerciseList.map((exercise, index) => (
-              <li key={index}>
+              <li key={index} className="mb-4">
                 {exercise.exerciseType === 'lineGraph' && (
                   <LineGraphExercise
                     exercise={exercise.exerciseData}

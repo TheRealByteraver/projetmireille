@@ -5,6 +5,7 @@ type Props = HTMLProps<HTMLInputElement> & {
   // type any custom props you want to pass other than-
   // existing props for a input like "placeholder", "name" or "type"
   error?: string | boolean;
+  className?: string;
 };
 
 const Input = (props: Props): React.JSX.Element => {
@@ -23,6 +24,7 @@ const Input = (props: Props): React.JSX.Element => {
     required,
     step,
     autoFocus = false,
+    className = '',
     ...restProps
   } = props;
 
@@ -33,14 +35,14 @@ const Input = (props: Props): React.JSX.Element => {
   );
 
   return (
-    <div className="relative">
+    <div className={classNames('relative', className)}>
       {label && (
         <label htmlFor={name} className={labelClassName}>
           <span className="flex items-center overflow-auto text-nowrap">{error ? error : label}</span>
         </label>
       )}
       <input
-        className="w-full p-2 border border-gray-300 rounded-md bg-white focus:ring-0"
+        className="w-full rounded-md border border-gray-300 bg-white p-2 focus:ring-0"
         {...restProps}
         min={min}
         max={max}

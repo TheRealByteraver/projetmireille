@@ -42,7 +42,7 @@ const CreateLineGraphExerciseForm = (props: Props): React.JSX.Element => {
 
   return (
     <>
-      <div className="py-4">
+      <div className="mb-6">
         <LineGraphExercise
           exercise={{
             startNumber: Number(startNumber),
@@ -57,8 +57,9 @@ const CreateLineGraphExerciseForm = (props: Props): React.JSX.Element => {
           showSolution={() => {}}
         />
       </div>
-      <form className="flex flex-col gap-6 pt-2" onSubmit={handleSubmit(onSubmit)}>
+      <form className="" onSubmit={handleSubmit(onSubmit)}>
         <Input
+          className="mb-6"
           type="number"
           label="Nombre de départ"
           error={errors.startNumber?.message}
@@ -66,6 +67,7 @@ const CreateLineGraphExerciseForm = (props: Props): React.JSX.Element => {
         />
 
         <Input
+          className="mb-6"
           type="number"
           label="Taille du pas"
           error={errors.step?.message}
@@ -73,6 +75,7 @@ const CreateLineGraphExerciseForm = (props: Props): React.JSX.Element => {
         />
 
         <Input
+          className="mb-6"
           type="number"
           label="Position de la question"
           error={errors.questionPosition?.message}
@@ -80,13 +83,14 @@ const CreateLineGraphExerciseForm = (props: Props): React.JSX.Element => {
         />
 
         <Input
+          className="mb-6"
           type="number"
           label="Nombre de pas"
           error={errors.nrOfSteps?.message}
           {...register('nrOfSteps', { required: true })}
         />
 
-        <Button className="ml-auto" color="green" type="submit">
+        <Button className="mb-2 w-full sm:float-right sm:w-auto" color="green" type="submit">
           Ajouter l&apos;exercice
         </Button>
       </form>

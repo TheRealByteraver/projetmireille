@@ -25,14 +25,19 @@ const Dashboard = (): React.JSX.Element => {
     <>
       {isModalOpen && (
         <Modal isOpen={isModalOpen}>
-          <div className="flex h-full w-full flex-col gap-4 overflow-hidden border-2 border-green-500 p-4">
+          <div
+            className={
+              'h-full w-full overflow-auto border-2 border-green-500 p-4 xl:flex xl:flex-col xl:overflow-hidden'
+            }
+          >
             <CreateExerciseListForm />
-            <Button className="ml-auto" onClick={() => setIsModalOpen(false)}>
+            <Button className="float-right mt-4 xl:ml-auto" onClick={() => setIsModalOpen(false)}>
               Close
             </Button>
           </div>
         </Modal>
       )}
+
       <div className="flex h-screen w-screen flex-col justify-between pb-6">
         <div className="mt-8 flex w-full flex-col gap-4 px-4">
           <h1 className="mb-4 text-2xl font-bold">Tableau de bord</h1>
