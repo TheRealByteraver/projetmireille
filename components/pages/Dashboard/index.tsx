@@ -1,5 +1,5 @@
 'use client';
-import CreateExerciseListForm from '@/components/pages/CreateExerciseListForm';
+import CreateExerciseListModal from '@/components/pages/CreateExerciseListModal';
 import columns from '@/components/pages/Dashboard/columns';
 import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
@@ -26,7 +26,7 @@ const Dashboard = (): React.JSX.Element => {
       {isModalOpen && (
         <Modal isOpen={isModalOpen}>
           <div className="h-full w-full overflow-auto p-4 xl:flex xl:flex-col xl:overflow-hidden">
-            <CreateExerciseListForm />
+            <CreateExerciseListModal />
             <Button className="float-right mt-4 xl:ml-auto" onClick={() => setIsModalOpen(false)}>
               Close
             </Button>

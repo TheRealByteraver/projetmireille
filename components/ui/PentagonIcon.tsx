@@ -23,8 +23,8 @@ const PentagonIcon = (props: Props): React.JSX.Element => {
   const strokeColor = STROKE_MAP[color];
 
   return (
-    <svg viewBox="0 0 100 100" className="w-full h-full" aria-hidden>
-      <polygon points="50,12 93,38 76,88 24,88 7,38" fill={fillColor} stroke={strokeColor} strokeWidth={5} />
+    <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden>
+      <polygon points="50,12 93,38 76,88 24,88 7,38" fill={fillColor} stroke={strokeColor} strokeWidth={8} />
       <text
         x="50"
         y="72"

@@ -1,5 +1,5 @@
 import LineGraphExercise from '@/components/LineGraphExercise';
-import CreateLineGraphExerciseForm from '@/components/pages/CreateLineGraphExerciseForm';
+import CreateLineGraphExerciseForm from '@/components/forms/CreateLineGraphExerciseForm';
 import { Exercise, ExerciseType } from '@/types/apiTypes';
 import { LineGraphExercise as LineGraphExerciseType } from '@/types/frontend';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ type SelectOption = {
   label: string;
 };
 
-const CreateExerciseListForm = (): React.JSX.Element => {
+const CreateExerciseListModal = (): React.JSX.Element => {
   // VARS
   const options: SelectOption[] = [{ value: 'lineGraph', label: 'Graphique en ligne' }];
 
@@ -56,25 +56,30 @@ const CreateExerciseListForm = (): React.JSX.Element => {
         </div>
 
         <div className="w-full xl:flex xl:flex-col xl:overflow-auto">
-          <p className="mb-1 text-sm font-bold">Liste d&apos;exercices</p>
+          {exerciseList.length > 0 && (
+            <>
+              <p className="mt-4 mb-1 text-sm font-bold xl:mt-0">Liste actuelle</p>
 
-          <ul className="rounded-md border border-gray-300 p-4 xl:flex xl:h-full xl:flex-col xl:overflow-auto">
-            {exerciseList.map((exercise, index) => (
-              <li key={index} className="mb-4">
-                {exercise.exerciseType === 'lineGraph' && (
-                  <LineGraphExercise
-                    exercise={exercise.exerciseData}
-                    color={exercise.exerciseData.level === 'CE1' ? 'blue' : 'green'}
-                    isSolutionVisible={true}
-                  />
-                )}
-              </li>
-            ))}
-          </ul>
+              <ul className="rounded-md border border-gray-300 p-4 xl:flex xl:h-full xl:flex-col xl:overflow-auto">
+                {exerciseList.map((exercise, index) => (
+                  <li key={index} className="mb-4">
+                    {exercise.exerciseType === 'lineGraph' && (
+                      <LineGraphExercise
+                        exercise={exercise.exerciseData}
+                        color={exercise.exerciseData.level === 'CE1' ? 'blue' : 'green'}
+                        isSolutionVisible={true}
+                        interactive={false}
+                      />
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default CreateExerciseListForm;
+export default CreateExerciseListModal;

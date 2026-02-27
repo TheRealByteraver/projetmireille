@@ -1,3 +1,4 @@
+import { classNames } from '@/utils/classNames';
 import PentagonIcon from './ui/PentagonIcon';
 import { LineGraphExercise as LineGraphExerciseType } from '@/types/frontend';
 
@@ -13,11 +14,12 @@ type Props = {
   color: LineGraphExerciseColor;
   isSolutionVisible: boolean;
   showSolution?: () => void;
+  interactive?: boolean;
 };
 
 const LineGraphExercise = (props: Props): React.JSX.Element => {
   // PROPS
-  const { exercise, color, isSolutionVisible, showSolution = () => {} } = props;
+  const { exercise, color, isSolutionVisible, showSolution, interactive = true } = props;
   const { startNumber, questionPosition, nrOfSteps, step } = exercise;
 
   // VARS
@@ -38,8 +40,9 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
               <Icon
                 isSolutionVisible={isSolutionVisible}
                 solution={solution}
-                handleClick={showSolution}
+                onClick={showSolution}
                 color={color}
+                interactive={interactive}
               />
             )}
           </li>
@@ -50,8 +53,9 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
               <Icon
                 isSolutionVisible={isSolutionVisible}
                 solution={solution}
-                handleClick={showSolution}
+                onClick={showSolution}
                 color={color}
+                interactive={interactive}
               />
             )}
             <div
@@ -71,31 +75,40 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
 type IconProps = {
   isSolutionVisible: boolean;
   solution: number;
-  handleClick: () => void;
+  onClick?: () => void;
   color: LineGraphExerciseColor;
+  interactive?: boolean;
 };
 
-const Icon = ({ isSolutionVisible, solution, handleClick, color }: IconProps): React.JSX.Element => (
-  <>
-    <div
-      className="absolute bottom-2.5 -left-0.5 h-12 w-12 -translate-x-1/2 hover:cursor-pointer"
-      onClick={handleClick}
-    >
-      <PentagonIcon color={color} />
-    </div>
-    {isSolutionVisible && (
+const Icon = (props: IconProps): React.JSX.Element => {
+  // PROPS
+  const { isSolutionVisible, solution, onClick, color, interactive = true } = props;
+
+  // VARS
+  const iconClassName = interactive ? 'hover:cursor-pointer' : '';
+
+  return (
+    <>
       <div
-        className={
-          'absolute -left-0.5 -translate-x-1/2 translate-y-1/2 ' +
-          'mt-3 flex w-full items-center justify-center font-semibold ' +
-          twColors[color].textColor
-        }
+        className={classNames('absolute bottom-3 -left-0.5 h-12 w-12 -translate-x-1/2', iconClassName)}
+        onClick={interactive ? onClick : undefined}
       >
-        {solution}
+        <PentagonIcon color={color} />
       </div>
-    )}
-  </>
-);
+      {isSolutionVisible && (
+        <div
+          className={
+            'absolute -left-0.5 -translate-x-1/2 translate-y-1/2 ' +
+            'mt-3 flex w-full items-center justify-center font-semibold ' +
+            twColors[color].textColor
+          }
+        >
+          {solution}
+        </div>
+      )}
+    </>
+  );
+};
 
 export default LineGraphExercise;
 
