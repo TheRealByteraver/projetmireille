@@ -32,6 +32,8 @@ const CreateLineGraphExerciseForm = (props: Props): React.JSX.Element => {
     watch,
     control,
     setValue,
+    reset,
+    setFocus,
     formState: { errors },
   } = useForm<LineGraphExerciseType>({
     defaultValues: {
@@ -46,7 +48,11 @@ const CreateLineGraphExerciseForm = (props: Props): React.JSX.Element => {
   const formValues = watch();
 
   // METHODS
-  const onSubmit: SubmitHandler<LineGraphExerciseType> = (data) => addExercise(data);
+  const onSubmit: SubmitHandler<LineGraphExerciseType> = (data) => {
+    addExercise(data);
+    reset(undefined, { keepValues: true });
+    setFocus('step');
+  };
 
   // EFFECTS
   useEffect(() => {

@@ -41,14 +41,14 @@ const ReactTable = <T,>(props: Props<T>): React.JSX.Element => {
   return (
     <div
       className={classNames(
-        'px-4 sm:px-6 lg:px-8 border border-gray-300 rounded-md pb-1 overflow-y-hidden',
+        'overflow-y-hidden rounded-md border border-gray-300 px-4 pb-1 sm:px-6 lg:px-8',
         evenRows ? 'bg-gray-50' : '',
       )}
     >
       <div className="flow-root">
         <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle">
-            <table className="min-w-full border-separate border-spacing-0 pt-8 bg-white">
+            <table className="min-w-full border-separate border-spacing-0 bg-white pt-8">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => {
                   const { headers } = headerGroup;
@@ -74,7 +74,7 @@ const ReactTable = <T,>(props: Props<T>): React.JSX.Element => {
                             className={classNames(specificHeaderClass, commonHeaderClass)}
                           >
                             {
-                              <span className="inline-flex items-center w-full group">
+                              <span className="group inline-flex w-full items-center">
                                 {flexRender(header.column.columnDef.header, header.getContext())}
                               </span>
                             }
@@ -89,7 +89,7 @@ const ReactTable = <T,>(props: Props<T>): React.JSX.Element => {
                 {table.getRowModel().rows.map((row) => {
                   const cells = row.getVisibleCells();
                   return (
-                    <tr key={row.id} className="even:bg-gray-50 bg-white">
+                    <tr key={row.id} className="bg-white even:bg-gray-50">
                       {cells.map((cell) => (
                         <td
                           key={cell.id}

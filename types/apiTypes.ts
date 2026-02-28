@@ -6,6 +6,7 @@ type Difficulty = 'easy' | 'medium' | 'hard';
 type ExerciseType = 'lineGraph'; // TODO: add other exercise type definitions
 
 type ApiUser = {
+  message?: string;
   id: number;
   lastName: string;
   firstName: string;

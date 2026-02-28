@@ -9,20 +9,20 @@ const LandingPage = (): React.JSX.Element => {
 
   return (
     <>
-      <h1 className="text-5xl font-bold text-center text-gray-500 my-6">Projet Mireille</h1>
-      <div className="w-full flex flex-col items-center">
+      <h1 className="my-6 text-center text-5xl font-bold text-gray-500">Projet Mireille</h1>
+      <div className="flex w-full flex-col items-center">
         {/* original size: 878x878 */}
         <Image src="/home.jpg" width={600} height={600} alt="Project logo" loading="eager" />
-        <div className="flex gap-4 mt-4">
-          <Button onClick={() => router.push('/dashboard')} color="blue">
-            Tableau de bord
+        <div className="mt-4 flex gap-4">
+          <Button onClick={() => router.push('/login')} color="blue">
+            Se connecter
           </Button>
 
           <Button onClick={() => router.push('/practice')} color="green">
             Pratique
           </Button>
         </div>
-        <p className="text-gray-500 my-6">Projet Mireille est un projet educatif pour les enfants de 9 à 11 ans.</p>
+        <p className="my-6 text-gray-500">Projet Mireille est un projet educatif pour les enfants de 9 à 11 ans.</p>
       </div>
     </>
   );

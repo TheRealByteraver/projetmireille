@@ -15,7 +15,7 @@ const Dashboard = (): React.JSX.Element => {
   // STATE
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // HOOKS
+  // RQ
   const { data: exerciseLists = [], isLoading, error } = useExerciseLists();
 
   if (isLoading) return <div>Loading...</div>;
@@ -25,12 +25,7 @@ const Dashboard = (): React.JSX.Element => {
     <>
       {isModalOpen && (
         <Modal isOpen={isModalOpen}>
-          <div className="h-full w-full overflow-auto p-4 xl:flex xl:flex-col xl:overflow-hidden">
-            <CreateExerciseListModal />
-            <Button className="float-right mt-4 xl:ml-auto" onClick={() => setIsModalOpen(false)}>
-              Close
-            </Button>
-          </div>
+          <CreateExerciseListModal closeModal={() => setIsModalOpen(false)} />
         </Modal>
       )}
 
