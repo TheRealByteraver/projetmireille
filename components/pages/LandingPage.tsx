@@ -20,11 +20,17 @@ const LandingPage = (): React.JSX.Element => {
         <Image src="/home.jpg" width={600} height={600} alt="Project logo" loading="eager" />
         <div className="mt-4 flex gap-4">
           {user ? (
-            <Button onClick={() => setCurrentUser(undefined)} color="blue">
-              Se déconnecter
-            </Button>
+            <>
+              <Button onClick={() => setCurrentUser(undefined)} color="indigo">
+                Se déconnecter
+              </Button>
+
+              <Button onClick={() => router.push('/dashboard')} color="blue">
+                Tableau de bord
+              </Button>
+            </>
           ) : (
-            <Button onClick={() => router.push('/login')} color="blue">
+            <Button onClick={() => router.push('/login')} color="indigo">
               Se connecter
             </Button>
           )}
