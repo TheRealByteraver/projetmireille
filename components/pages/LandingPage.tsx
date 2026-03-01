@@ -1,11 +1,16 @@
 'use client';
 import Button from '@/components/ui/Button';
+import useCurrentUser from '@/hooks/useCurrentUser';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 const LandingPage = (): React.JSX.Element => {
   // ROUTER
   const router = useRouter();
+
+  // AUTH
+  const [user, setCurrentUser] = useCurrentUser();
+  console.log('user in LandingPage: ', user);
 
   return (
     <>
@@ -14,9 +19,15 @@ const LandingPage = (): React.JSX.Element => {
         {/* original size: 878x878 */}
         <Image src="/home.jpg" width={600} height={600} alt="Project logo" loading="eager" />
         <div className="mt-4 flex gap-4">
-          <Button onClick={() => router.push('/login')} color="blue">
-            Se connecter
-          </Button>
+          {user ? (
+            <Button onClick={() => setCurrentUser(undefined)} color="blue">
+              Se déconnecter
+            </Button>
+          ) : (
+            <Button onClick={() => router.push('/login')} color="blue">
+              Se connecter
+            </Button>
+          )}
 
           <Button onClick={() => router.push('/practice')} color="green">
             Pratique

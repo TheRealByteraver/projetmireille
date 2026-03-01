@@ -16,6 +16,13 @@ type User = {
   updatedAt: Date;
 };
 
+type CurrentUser = {
+  firstName?: string;
+  lastName?: string;
+  username?: string;
+  authorization?: string;
+};
+
 type ExerciseList = {
   id: number;
   name: string;
@@ -34,4 +41,4 @@ type LineGraphExercise = {
   difficulty: Difficulty;
 };
 
-export type { LineGraphExercise, ButtonColors, User, ExerciseList };
+export type { LineGraphExercise, ButtonColors, User, CurrentUser, ExerciseList };

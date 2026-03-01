@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useUser } from '@/services/users';
 import { useEffect } from 'react';
-import Alert from '../ui/Alert';
 import useAlert from '@/hooks/useAlert';
+import useCurrentUser from '@/hooks/useCurrentUser';
 
 type FormValues = {
   username: string;
@@ -17,12 +17,16 @@ const Login = (): React.JSX.Element => {
   // ROUTER
   const router = useRouter();
 
+  // AUTH
+  const [_, setCurrentUser] = useCurrentUser();
+
   // RHF
   const {
     register,
     handleSubmit,
     getValues,
-    formState: { errors, isSubmitted },
+    reset,
+    formState: { /* errors, */ isSubmitted },
   } = useForm<FormValues>({
     defaultValues: {
       username: '',
@@ -36,25 +40,26 @@ const Login = (): React.JSX.Element => {
   // HOOKS
   const [alert, setAlert] = useAlert();
 
-  console.log('User:', user, 'isLoading:', isLoading, 'isError:', isError);
-  //   console.log('IsSubmitted:', isSubmitted);
-  //   console.log('IsSuccess:', isSuccess);
-
   // EFFECTS
   useEffect(() => {
     if (isSuccess) {
       // check if login was successful
       if (user.firstName !== undefined && user.lastName !== undefined && user.username !== undefined) {
+        setCurrentUser(user, getValues());
         router.push('/');
       } else {
         setAlert({ message: user?.message || 'Identifiants incorrects', alertType: 'error' });
+        reset();
       }
     }
-  }, [isSuccess, router, setAlert, user]);
+    if (isError) {
+      setAlert({ message: user?.message || 'Un problème est survenu, reessayer plus tard', alertType: 'error' });
+    }
+  }, [isError, isSuccess, router, setAlert, user, getValues, setCurrentUser, reset]);
 
   // METHODS
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log('FormValues', data);
+  const onSubmit: SubmitHandler<FormValues> = (/* formValues */) => {
+    // console.log('FormValues', formValues);
   };
 
   return (
@@ -65,13 +70,13 @@ const Login = (): React.JSX.Element => {
         <label htmlFor="username" className="mb-1 text-sm font-bold">
           Nom d&apos;utilisateur
         </label>
-        <Input type="text" placeholder="Nom d'utilisateur" {...register('username')} />
+        <Input type="text" autoComplete="username" placeholder="Nom d'utilisateur" {...register('username')} />
       </div>
       <div>
         <label htmlFor="password" className="mb-1 text-sm font-bold">
           Mot de passe
         </label>
-        <Input type="password" placeholder="Mot de passe" {...register('password')} />
+        <Input type="password" autoComplete="current-password" placeholder="Mot de passe" {...register('password')} />
       </div>
       <div className="mt-2 flex flex-row justify-between">
         <Button onClick={() => router.push('/')}>Retour à l&apos;accueil</Button>
