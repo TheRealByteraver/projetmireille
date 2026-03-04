@@ -17,14 +17,35 @@ const Button = (props: Props): React.JSX.Element => {
   // VARS
   const colors: Record<ButtonColors, string> = {
     white: classNames(
-      'text-gray-700 border-gray-300 bg-gray-100 hover:bg-white focus-visible:outline-gray-300',
-      'disabled:bg-gray-300/50 disabled:text-gray-700/50',
+      'text-gray-700 bg-gray-100 border-gray-100',
+      disabled ? '' : 'hover:border-gray-300 hover:bg-white',
+      'focus-visible:outline-gray-300 disabled:opacity-50',
     ),
-    green: 'text-white bg-green-600 hover:bg-green-500 focus-visible:outline-green-600 disabled:bg-green-600/50',
-    blue: 'text-white bg-blue-600 hover:bg-blue-500 focus-visible:outline-blue-600 disabled:bg-blue-600/50',
-    indigo: 'text-white bg-indigo-600 hover:bg-indigo-500 focus-visible:outline-indigo-600 disabled:bg-indigo-600/50',
-    red: 'text-white bg-red-600 hover:bg-red-500 focus-visible:outline-red-600 disabled:bg-red-600/50',
-    yellow: 'text-white bg-yellow-600 hover:bg-yellow-500 focus-visible:outline-yellow-600 disabled:bg-yellow-600/50',
+    green: classNames(
+      'text-white bg-green-600 border-green-600',
+      disabled ? '' : 'hover:border-green-500 hover:bg-green-500',
+      'focus-visible:outline-green-600 disabled:opacity-50',
+    ),
+    blue: classNames(
+      'text-white bg-blue-600 border-blue-600',
+      disabled ? '' : 'hover:border-blue-500 hover:bg-blue-500',
+      'focus-visible:outline-blue-600 disabled:opacity-50',
+    ),
+    indigo: classNames(
+      'text-white bg-indigo-600 border-indigo-600',
+      disabled ? '' : 'hover:border-indigo-500 hover:bg-indigo-500',
+      'focus-visible:outline-indigo-600 disabled:opacity-50',
+    ),
+    red: classNames(
+      'text-white bg-red-600 border-red-600',
+      disabled ? '' : 'hover:border-red-500 hover:bg-red-500',
+      'focus-visible:outline-red-600 disabled:opacity-50',
+    ),
+    yellow: classNames(
+      'text-white bg-yellow-600 border-yellow-600',
+      disabled ? '' : 'hover:border-yellow-500 hover:bg-yellow-500',
+      'focus-visible:outline-yellow-600 disabled:opacity-50',
+    ),
   };
 
   return (

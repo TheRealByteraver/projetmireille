@@ -1,3 +1,4 @@
+import useCurrentUser from '@/hooks/useCurrentUser';
 import { ApiExerciseList } from '@/types/apiTypes';
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query';
 
@@ -19,31 +20,39 @@ const useExerciseLists = (): UseQueryResult<ApiExerciseList[], Error> =>
 
 // ****************************************************************************
 // SAVE EXERCISE LIST
-const saveExerciseList = async (exerciseList: ApiExerciseList): Promise<ApiExerciseList> => {
-  const username = 'mireille';
-  const password = 'mireille';
-  const base64Credentials = Buffer.from(`${username}:${password}`).toString('base64');
-
+const saveExerciseList = async (exerciseList: ApiExerciseList, auth?: string): Promise<void> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/exercise-lists`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Basic ${base64Credentials}`,
+      Authorization: auth || '',
     },
     body: JSON.stringify(exerciseList),
   });
 
-  const data = await response.json(); // TODO: check
-  return data;
+  if (!response.ok) {
+    throw new Error('Failed to save exercise list');
+  }
 };
 
-const useSaveExerciseList = (): UseMutationResult<ApiExerciseList, Error, ApiExerciseList> => {
+const useSaveExerciseList = (): UseMutationResult<void, Error, ApiExerciseList> => {
+  // AUTH
+  const [user] = useCurrentUser();
+
+  // RQ
   const queryClient = useQueryClient();
 
+  // METHODS
+  const saveExerciseListAuth = async (exerciseList: ApiExerciseList): Promise<void> =>
+    saveExerciseList(exerciseList, user?.authorization);
+
   return useMutation({
-    mutationFn: saveExerciseList,
+    mutationFn: saveExerciseListAuth,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [EXERCISELISTS] });
+    },
+    onError: (error) => {
+      console.error(error);
     },
   });
 };

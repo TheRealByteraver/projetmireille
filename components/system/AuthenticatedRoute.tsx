@@ -1,3 +1,4 @@
+'use client';
 import { useEffect } from 'react';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import { redirect } from 'next/navigation';
@@ -12,7 +13,6 @@ const AuthenticatedRoute = (props: Props): React.JSX.Element => {
 
   // AUTH
   const [user] = useCurrentUser();
-  console.log('user in AuthenticatedRoute: ', user);
 
   // EFFECTS
   useEffect(() => {
@@ -21,9 +21,13 @@ const AuthenticatedRoute = (props: Props): React.JSX.Element => {
     }
   }, [user]);
 
+  if (!user) return <div>Loading...</div>;
+
   return (
-    <div className="flex flex-1 flex-col overflow-hidden">
-      <header className="flex h-16 items-center justify-between bg-white px-4"></header>
+    <div className="flex h-screen w-screen flex-col">
+      <header className="flex h-8 items-center bg-blue-600 pl-2 font-semibold text-white">
+        Utilisateur connecté: {user.firstName} {user.lastName}
+      </header>
       {children}
     </div>
   );

@@ -1,22 +1,27 @@
 import Alert, { AlertType } from '@/components/ui/Alert';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
-type AlertConfig = {
+type AlertProps = {
   message: string;
   alertType: AlertType;
 };
 
-type ReturnType = [React.JSX.Element | null, (alertConfig: AlertConfig) => void, () => void];
+type ReturnType = [React.JSX.Element | null, (alertProps: AlertProps) => void, () => void];
 
 const useAlert = (): ReturnType => {
   // STATE
-  const [alert, setAlert] = useState<AlertConfig | null>(null);
+  const [alert, setAlert] = useState<AlertProps | null>(null);
+
+  // METHODS
+  const clearAlert = useCallback(() => setAlert(null), []);
 
   return [
-    alert ? <Alert message={alert?.message} alertType={alert?.alertType} /> : null,
+    alert ? <Alert message={alert?.message} alertType={alert?.alertType} closeAlert={() => setAlert(null)} /> : null,
     setAlert,
-    () => setAlert(null),
+    clearAlert,
   ];
 };
 
 export default useAlert;
+
+export type { AlertProps };

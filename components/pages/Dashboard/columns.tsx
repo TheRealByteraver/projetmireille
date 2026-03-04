@@ -1,41 +1,53 @@
 import TextButton from '@/components/ui/TextButton';
 import { ApiExerciseList } from '@/types/apiTypes';
-import { createColumnHelper } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 const columnHelper = createColumnHelper<ApiExerciseList>();
 
-const columns = [
-  columnHelper.accessor('id', {
-    cell: (info) => <div className="text-left">{info.getValue()}</div>,
-  }),
-  columnHelper.accessor('name', {
-    header: () => 'Nom',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.display({
-    id: 'Level',
-    header: () => 'Niveaux',
-    cell: (info) => {
-      // const levels: string[] = info.row.original.exercises.reduce(
-      //   (prev, next) => (prev.includes(next.exerciseData.level) ? [...prev] : [...prev, next.exerciseData.level]),
-      //   [] as string[],
-      // );
-      // console.log(info);
-      const levels = ['CE1', 'CE2'];
-      return <span>{levels.join(', ')}</span>;
-    },
-  }),
-  columnHelper.display({
-    id: 'edit',
-    header: () => '',
-    cell: () => <TextButton color="indigo" text="Editer" />,
-  }),
-  columnHelper.display({
-    id: 'delete',
-    header: () => '',
-    cell: () => <TextButton color="yellow" text="Supprimer" />,
-  }),
-]; // as ColumnDef<ExerciseList>[];
+const getColumns = (presentExerciseList: (exerciseListId: number) => void): ColumnDef<ApiExerciseList>[] =>
+  [
+    columnHelper.accessor('id', {
+      cell: (info) => <div className="text-left">{info.getValue()}</div>,
+    }),
+    columnHelper.accessor('name', {
+      header: () => 'Nom',
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.display({
+      id: 'exerciseCount',
+      header: () => "Nombre d'exercices",
+      cell: (info) => info.row.original.exercises.length,
+    }),
+
+    columnHelper.display({
+      id: 'Level',
+      header: () => 'Niveaux',
+      cell: (info) => {
+        const levels: string[] = info.row.original.exercises.reduce(
+          (prev, next) => (prev.includes(next.exerciseData.level) ? prev : [...prev, next.exerciseData.level]),
+          [] as string[],
+        );
+        return <span>{levels.join(', ')}</span>;
+      },
+    }),
+    columnHelper.display({
+      id: 'present',
+      header: () => '',
+      cell: (info) => (
+        <TextButton color="green" text="Présenter" onClick={() => presentExerciseList(info.row.original.id)} />
+      ),
+    }),
+    // columnHelper.display({
+    //   id: 'edit',
+    //   header: () => '',
+    //   cell: () => <TextButton color="yellow" text="Modifier" />,
+    // }),
+    // columnHelper.display({
+    //   id: 'delete',
+    //   header: () => '',
+    //   cell: () => <TextButton color="red" text="Supprimer" />,
+    // }),
+  ] as const as ColumnDef<ApiExerciseList>[];
 
 // const columns = [
 //   // Display Column
@@ -98,4 +110,4 @@ const columns = [
 //   }),
 // ];
 
-export default columns;
+export default getColumns;

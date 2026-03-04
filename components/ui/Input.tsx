@@ -26,6 +26,7 @@ const Input = (props: Props): React.JSX.Element => {
     autoFocus = false,
     className = '',
     autoComplete,
+    onChange,
     ...restProps
   } = props;
 
@@ -58,6 +59,7 @@ const Input = (props: Props): React.JSX.Element => {
         step={step}
         autoFocus={autoFocus}
         autoComplete={autoComplete}
+        onChange={onChange}
       />
     </div>
   );
