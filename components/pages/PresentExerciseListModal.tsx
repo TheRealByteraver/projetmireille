@@ -17,12 +17,12 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
   // STATE
   const [exerciseIndex, setExerciseIndex] = useState<number>(0);
   const [twoExerciseMode, setTwoExerciseMode] = useState<boolean>(false);
-  const [isSolutionVisible, setIsSolutionVisible] = useState<boolean>(false);
+  const [solutionsVisible, setSolutionsVisible] = useState<boolean[]>([false, false]);
 
   // METHODS
   const handleNextExercise = (index: number) => {
     setExerciseIndex(Math.max(0, exerciseIndex + index));
-    setIsSolutionVisible(false);
+    setSolutionsVisible([false, false]);
   };
 
   // VARS
@@ -55,15 +55,15 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
               <LineGraphExercise
                 exercise={exerciseList.exercises[exerciseIndex].exerciseData}
                 color={exerciseList.exercises[exerciseIndex].exerciseData.level === 'CE1' ? 'blue' : 'green'}
-                isSolutionVisible={isSolutionVisible}
-                showSolution={() => setIsSolutionVisible(true)}
+                isSolutionVisible={solutionsVisible[0]}
+                showSolution={() => setSolutionsVisible((prev) => [true, prev[1]])}
               />
               {twoExerciseMode && exerciseIndex + 1 < exerciseList.exercises.length && (
                 <LineGraphExercise
                   exercise={exerciseList.exercises[exerciseIndex + 1].exerciseData}
                   color={exerciseList.exercises[exerciseIndex + 1].exerciseData.level === 'CE1' ? 'blue' : 'green'}
-                  isSolutionVisible={isSolutionVisible}
-                  showSolution={() => setIsSolutionVisible(true)}
+                  isSolutionVisible={solutionsVisible[1]}
+                  showSolution={() => setSolutionsVisible((prev) => [prev[0], true])}
                 />
               )}
             </div>
