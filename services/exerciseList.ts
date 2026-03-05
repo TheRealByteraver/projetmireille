@@ -57,4 +57,42 @@ const useSaveExerciseList = (): UseMutationResult<void, Error, ApiExerciseList> 
   });
 };
 
-export { useExerciseLists, useSaveExerciseList };
+// ****************************************************************************
+// DELETE EXERCISE
+const deleteExerciseList = async (exerciseListId: number, auth?: string): Promise<void> => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/exercise-lists/${exerciseListId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: auth || '',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete exercise list ${exerciseListId}`);
+  }
+};
+
+const useDeleteExerciseList = (): UseMutationResult<void, Error, number> => {
+  // AUTH
+  const [user] = useCurrentUser();
+
+  // RQ
+  const queryClient = useQueryClient();
+
+  // METHODS
+  const deleteExerciseListAuth = async (exerciseListId: number): Promise<void> =>
+    deleteExerciseList(exerciseListId, user?.authorization);
+
+  return useMutation({
+    mutationFn: deleteExerciseListAuth,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [EXERCISELISTS] });
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+};
+
+export { useExerciseLists, useSaveExerciseList, useDeleteExerciseList };

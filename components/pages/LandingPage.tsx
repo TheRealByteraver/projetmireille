@@ -10,7 +10,6 @@ const LandingPage = (): React.JSX.Element => {
 
   // AUTH
   const [user, setCurrentUser] = useCurrentUser();
-  console.log('user in LandingPage: ', user);
 
   return (
     <>

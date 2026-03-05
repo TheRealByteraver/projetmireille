@@ -4,7 +4,10 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 const columnHelper = createColumnHelper<ApiExerciseList>();
 
-const getColumns = (presentExerciseList: (exerciseListId: number) => void): ColumnDef<ApiExerciseList>[] =>
+const getColumns = (
+  presentExerciseList: (exerciseListId: number) => void,
+  deleteExerciseList: (exerciseListId: number) => void,
+): ColumnDef<ApiExerciseList>[] =>
   [
     columnHelper.accessor('id', {
       cell: (info) => <div className="text-left">{info.getValue()}</div>,
@@ -42,11 +45,13 @@ const getColumns = (presentExerciseList: (exerciseListId: number) => void): Colu
     //   header: () => '',
     //   cell: () => <TextButton color="yellow" text="Modifier" />,
     // }),
-    // columnHelper.display({
-    //   id: 'delete',
-    //   header: () => '',
-    //   cell: () => <TextButton color="red" text="Supprimer" />,
-    // }),
+    columnHelper.display({
+      id: 'delete',
+      header: () => '',
+      cell: (info) => (
+        <TextButton color="red" text="Supprimer" onClick={() => deleteExerciseList(info.row.original.id)} />
+      ),
+    }),
   ] as const as ColumnDef<ApiExerciseList>[];
 
 // const columns = [

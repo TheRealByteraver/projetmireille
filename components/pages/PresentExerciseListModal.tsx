@@ -17,12 +17,13 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
   const [isSolutionVisible, setIsSolutionVisible] = useState<boolean>(false);
 
   // METHODS
-  const handleNextExercise = () => {
-    setExerciseIndex(exerciseIndex + 1);
+  const handleNextExercise = (index: number) => {
+    setExerciseIndex(exerciseIndex + index);
     setIsSolutionVisible(false);
   };
 
   // VARS
+  const isFirstExercise = exerciseList ? exerciseIndex === 0 : true;
   const isLastExercise = exerciseList ? exerciseIndex === exerciseList.exercises.length - 1 : true;
 
   return (
@@ -39,15 +40,15 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
             isSolutionVisible={isSolutionVisible}
             showSolution={() => setIsSolutionVisible(true)}
           />
-          {isLastExercise ? (
-            <Button className="ml-auto" color="green" onClick={closeModal}>
-              Terminer
+          <div className="flex justify-between gap-2">
+            <Button className="" color="blue" disabled={isFirstExercise} onClick={() => handleNextExercise(-1)}>
+              {'<< Précédent'}
             </Button>
-          ) : (
-            <Button className="ml-auto" color="green" onClick={handleNextExercise}>
-              Suivant
+
+            <Button className="" color="blue" disabled={isLastExercise} onClick={() => handleNextExercise(1)}>
+              {'Suivant >>'}
             </Button>
-          )}
+          </div>
         </div>
       )}
       <Button className="ml-auto" onClick={closeModal}>

@@ -38,7 +38,6 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
 
   // EFFECTS
   useEffect(() => {
-    console.log('status', status);
     if (status === 'error') {
       setAlert({ alertType: status, message: error.message });
     } else if (status === 'success') {
@@ -92,7 +91,7 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
   const validList = exerciseList.length > 0 && listName !== '';
 
   return (
-    <div className="h-full w-full overflow-auto p-4 xl:flex xl:flex-col xl:overflow-hidden">
+    <div className="h-full w-full overflow-auto p-4 sm:flex sm:flex-col sm:justify-between sm:overflow-auto">
       <div className="xl:flex xl:h-full xl:flex-col xl:overflow-hidden">
         <h1 className="mb-4 text-2xl font-bold">Créer une liste d&apos;exercices</h1>
         {alert && <div className="mb-4">{alert}</div>}
