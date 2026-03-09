@@ -15,11 +15,12 @@ type Props<T> = {
   data: T[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<T, any>[];
+  showColumnsWidths?: ('sm' | 'md' | 'lg' | 'xl' | '2xl' | '')[];
 };
 
 const ReactTable = <T,>(props: Props<T>): React.JSX.Element => {
   // PROPS
-  const { data, columns } = props;
+  const { data, columns, showColumnsWidths } = props;
 
   // RT
   const table = useReactTable({
@@ -34,6 +35,37 @@ const ReactTable = <T,>(props: Props<T>): React.JSX.Element => {
     enableRowSelection: true,
     manualPagination: true,
   });
+
+  // METHODS
+  const getColumnVisibilityClass = (index: number): string => {
+    switch (showColumnsWidths?.[index]) {
+      case 'sm':
+        return 'hidden sm:table-cell';
+      case 'md':
+        return 'hidden md:table-cell';
+      case 'lg':
+        return 'hidden lg:table-cell';
+      case 'xl':
+        return 'hidden xl:table-cell';
+      case '2xl':
+        return 'hidden 2xl:table-cell';
+      default:
+        return '';
+    }
+  };
+
+  const getHeaderClass = (index: number, HeaderCnt: number): string => {
+    const isFirstHeader = index === 0;
+    const isLastHeader = index === HeaderCnt - 1;
+    const textClass = 'text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter';
+    const commonHeaderClass = 'uppercase sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5';
+    const specificHeaderClass = isFirstHeader
+      ? 'pr-3 pl-4 ' + textClass
+      : isLastHeader
+        ? 'pr-4 pl-3 backdrop-blur-sm backdrop-filter sm:pr-6 lg:pr-8 text-sm '
+        : 'px-3 ' + textClass;
+    return classNames(commonHeaderClass, specificHeaderClass);
+  };
 
   // VARS
   const evenRows = table.getRowModel().rows.length % 2 === 0;
@@ -55,23 +87,13 @@ const ReactTable = <T,>(props: Props<T>): React.JSX.Element => {
                   return (
                     <tr key={headerGroup.id}>
                       {headers.map((header, index) => {
-                        const isFirstHeader = index === 0;
-                        const isLastHeader = index === headers.length - 1;
-                        const commonHeaderClass =
-                          'uppercase sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5';
-                        const textClass =
-                          'text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter';
-                        const specificHeaderClass = isFirstHeader
-                          ? 'pr-3 pl-4 ' + textClass
-                          : isLastHeader
-                            ? 'pr-4 pl-3 backdrop-blur-sm backdrop-filter sm:pr-6 lg:pr-8 text-sm '
-                            : 'px-3 ' + textClass;
+                        const headerClass = getHeaderClass(index, headers.length);
 
                         return (
                           <th
                             key={header.id}
                             scope="col"
-                            className={classNames(specificHeaderClass, commonHeaderClass)}
+                            className={classNames(headerClass, getColumnVisibilityClass(index))}
                           >
                             {
                               <span className="group inline-flex w-full items-center">
@@ -90,12 +112,15 @@ const ReactTable = <T,>(props: Props<T>): React.JSX.Element => {
                   const cells = row.getVisibleCells();
                   return (
                     <tr key={row.id} className="bg-white even:bg-gray-50">
-                      {cells.map((cell) => (
+                      {cells.map((cell, index) => (
                         <td
                           key={cell.id}
                           onClick={(): void => row.toggleExpanded()}
-                          style={{ height: '1px' }} // allows for full-height children
-                          className="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pr-8"
+                          // style={{ height: '1px' }} // allows for full-height children
+                          className={classNames(
+                            'py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pr-8',
+                            getColumnVisibilityClass(index),
+                          )}
                         >
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </td>

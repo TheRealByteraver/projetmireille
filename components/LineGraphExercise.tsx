@@ -27,10 +27,14 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
   const solution = startNumber + questionPosition * step;
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden pt-10 pb-6">
+    <div className="flex flex-1 flex-col overflow-hidden pt-10 pb-11 sm:pb-6">
       <ul className="flex h-5 flex-row px-6">
         <li className={`border-r-2 border-b-4 border-l-4 ${twColors[color].borderColor} relative flex-1`}>
-          <div className={'absolute -left-0.5 mt-3 flex -translate-x-1/2 translate-y-1/2 items-center justify-center'}>
+          <div
+            className={
+              'absolute top-5 -left-0.5 mt-3 flex -translate-x-1/2 translate-y-1/2 items-center justify-center sm:top-0'
+            }
+          >
             {startNumber}
           </div>
         </li>
@@ -59,9 +63,10 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
               />
             )}
             <div
-              className={
-                'absolute left-0.5 mt-3 flex w-full translate-x-1/2 translate-y-1/2 items-center justify-center'
-              }
+              className={classNames(
+                'mt-3 flex w-full translate-x-1/2 translate-y-1/2 items-center justify-center',
+                'absolute top-5 left-0.5 sm:top-0',
+              )}
             >
               {endNumber}
             </div>
@@ -97,11 +102,12 @@ const Icon = (props: IconProps): React.JSX.Element => {
       </div>
       {isSolutionVisible && (
         <div
-          className={
-            'absolute -left-0.5 -translate-x-1/2 translate-y-1/2 ' +
-            'mt-3 flex w-full items-center justify-center font-semibold ' +
-            twColors[color].textColor
-          }
+          className={classNames(
+            'absolute -left-0.5 -translate-x-1/2 translate-y-1/2',
+            'mt-3 flex w-auto items-center justify-center font-semibold',
+            // '-top-1  rounded-md border-2 border-red-300 bg-white/30 px-1 backdrop-blur-[1px]',
+            twColors[color].textColor,
+          )}
         >
           {solution}
         </div>

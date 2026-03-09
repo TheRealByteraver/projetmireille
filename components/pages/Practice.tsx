@@ -52,8 +52,8 @@ const Practice = (): React.JSX.Element => {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-between pb-6">
-      <div className="w-full mt-8 px-4">
+    <div className="flex h-screen w-screen flex-col justify-between pb-6">
+      <div className="mt-8 w-full px-4">
         {exercises.length &&
           exercises.map(({ id, exercise, isSolutionVisible, color }) => (
             <div key={id} className="mb-8">
@@ -72,10 +72,8 @@ const Practice = (): React.JSX.Element => {
           </Button>
         </div>
       </div>
-      <div className="ml-4">
-        <Button onClick={() => router.push('/')} color="green">
-          Page principale
-        </Button>
+      <div className="mt-4 ml-4">
+        <Button onClick={() => router.push('/')}>Page principale</Button>
       </div>
     </div>
   );

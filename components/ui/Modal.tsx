@@ -6,11 +6,12 @@ type Props = {
   fullSize?: boolean;
   children: React.ReactNode;
   closeModal?: () => void;
+  closeOnOutsideClick?: boolean;
 };
 
 const Modal = (props: Props): React.JSX.Element => {
   // PROPS
-  const { isOpen, children, fullSize = false, closeModal } = props;
+  const { isOpen, children, fullSize = false, closeModal, closeOnOutsideClick = true } = props;
 
   // REFS – so we can move focus into the modal when it opens
   const contentRef = useRef<HTMLDivElement>(null);
@@ -28,7 +29,7 @@ const Modal = (props: Props): React.JSX.Element => {
             'absolute z-11 flex h-screen w-screen flex-col items-center justify-center bg-black/50 p-4 sm:p-8',
             fullSize ? 'h-screen w-screen' : '',
           )}
-          onClick={closeModal}
+          onClick={closeOnOutsideClick ? closeModal : undefined}
         >
           <div
             ref={contentRef}

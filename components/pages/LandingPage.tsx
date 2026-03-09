@@ -34,7 +34,7 @@ const LandingPage = (): React.JSX.Element => {
             </Button>
           )}
 
-          <Button onClick={() => router.push('/practice')} color="green">
+          <Button onClick={() => router.push('/practice')} color="blue">
             Pratique
           </Button>
         </div>

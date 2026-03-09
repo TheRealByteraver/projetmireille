@@ -8,11 +8,20 @@ type Props = {
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
+  noPadding?: boolean;
 };
 
 const Button = (props: Props): React.JSX.Element => {
   // PROPS
-  const { onClick, color = 'white', className = '', children, type = 'button', disabled = false } = props;
+  const {
+    onClick,
+    color = 'white',
+    className = '',
+    children,
+    type = 'button',
+    disabled = false,
+    noPadding = false,
+  } = props;
 
   // VARS
   const colors: Record<ButtonColors, string> = {
@@ -51,9 +60,10 @@ const Button = (props: Props): React.JSX.Element => {
   return (
     <button
       className={classNames(
-        'rounded-md border px-4 py-2 focus-visible:outline-2 focus-visible:outline-offset-2',
+        'rounded-md border focus-visible:outline-2 focus-visible:outline-offset-2',
         disabled ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer',
         colors[color],
+        noPadding ? '' : 'px-4 py-2',
         className,
       )}
       onClick={onClick}

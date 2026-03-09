@@ -8,6 +8,7 @@ import Button from '../ui/Button';
 import { useSaveExerciseList } from '@/services/exerciseList';
 import Input from '../ui/Input';
 import useAlert from '@/hooks/useAlert';
+import { TrashIcon } from '@heroicons/react/24/outline';
 
 type SelectOption = {
   value: ExerciseType;
@@ -78,6 +79,8 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
   const handleAddExercise = (exercise: LineGraphExerciseType) => {
     if (!selectedOption) return;
 
+    clearAlert();
+
     setExerciseList([
       ...exerciseList,
       {
@@ -85,6 +88,11 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
         exerciseData: exercise,
       },
     ]);
+  };
+
+  const handleRemoveExercise = (index: number) => {
+    const newExerciseList = [...exerciseList.filter((_, i) => i !== index)];
+    setExerciseList(newExerciseList);
   };
 
   // VARS
@@ -130,12 +138,24 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
                   {exerciseList.map((exercise, index) => (
                     <li key={index} className="mb-4">
                       {exercise.exerciseType === 'lineGraph' && (
-                        <LineGraphExercise
-                          exercise={exercise.exerciseData}
-                          color={exercise.exerciseData.level === 'CE1' ? 'blue' : 'green'}
-                          isSolutionVisible={true}
-                          interactive={false}
-                        />
+                        <div className="group relative">
+                          <LineGraphExercise
+                            exercise={exercise.exerciseData}
+                            color={exercise.exerciseData.level === 'CE1' ? 'blue' : 'green'}
+                            isSolutionVisible={true}
+                            interactive={false}
+                          />
+                          <div className="absolute top-0 hidden h-full w-full group-hover:block">
+                            <Button
+                              className="absolute top-1 right-1 p-1"
+                              noPadding
+                              color="red"
+                              onClick={() => handleRemoveExercise(index)}
+                            >
+                              <TrashIcon className="h-5 w-5 text-white" />
+                            </Button>
+                          </div>
+                        </div>
                       )}
                     </li>
                   ))}

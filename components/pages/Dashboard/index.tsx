@@ -53,7 +53,12 @@ const Dashboard = (): React.JSX.Element => {
   return (
     <>
       {isModalOpen && (
-        <Modal isOpen={isModalOpen} fullSize={['create', 'present'].includes(modalMode ?? '')} closeModal={closeModal}>
+        <Modal
+          isOpen={isModalOpen}
+          fullSize={['create', 'present'].includes(modalMode ?? '')}
+          closeModal={closeModal}
+          closeOnOutsideClick={modalMode === 'create' ? false : true}
+        >
           {modalMode === 'create' && <CreateExerciseListModal closeModal={closeModal} />}
           {modalMode === 'present' && (
             <PresentExerciseListModal
@@ -88,10 +93,11 @@ const Dashboard = (): React.JSX.Element => {
             <ReactTable
               data={exerciseLists}
               columns={getColumns(handlePresentExerciseList, handleDeleteExerciseList)}
+              showColumnsWidths={['md', '', 'md', 'sm', '', '']}
             />
           )}
 
-          <div className="flex w-full flex-col justify-between gap-4 sm:flex-row">
+          <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row">
             <Button onClick={() => router.push('/')} color="white">
               Page d&apos;accueil
             </Button>
