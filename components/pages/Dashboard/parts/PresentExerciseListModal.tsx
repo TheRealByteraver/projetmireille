@@ -1,9 +1,9 @@
 import { ApiExerciseList } from '@/types/apiTypes';
 import { useState } from 'react';
-import Button from '../ui/Button';
-import LineGraphExercise from '../LineGraphExercise';
+import Button from '../../../ui/generic/Button';
+import LineGraphExercise from '../../../ui/specific/LineGraphExercise';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import ToggleButton from '../ui/ToggleButton';
+import ToggleButton from '../../../ui/generic/ToggleButton';
 
 type Props = {
   exerciseList?: ApiExerciseList;

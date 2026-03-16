@@ -1,14 +1,14 @@
 'use client';
-import CreateExerciseListModal from '@/components/pages/CreateExerciseListModal';
+import CreateExerciseListModal from '@/components/pages/Dashboard/parts/CreateExerciseListModal';
 import getColumns from '@/components/pages/Dashboard/columns';
-import Button from '@/components/ui/Button';
-import Modal from '@/components/ui/Modal';
-import ReactTable from '@/components/ui/ReactTable';
+import Button from '@/components/ui/generic/Button';
+import Modal from '@/components/ui/generic/Modal';
+import ReactTable from '@/components/ui/generic/ReactTable';
 import { useDeleteExerciseList, useExerciseLists } from '@/services/exerciseList';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import PresentExerciseListModal from '../PresentExerciseListModal';
-import Dialog from '@/components/ui/Dialog';
+import PresentExerciseListModal from './parts/PresentExerciseListModal';
+import Dialog from '@/components/ui/generic/Dialog';
 
 const Dashboard = (): React.JSX.Element => {
   // ROUTER

@@ -1,4 +1,4 @@
-import Alert, { AlertType } from '@/components/ui/Alert';
+import Alert, { AlertType } from '@/components/ui/generic/Alert';
 import { useCallback, useState } from 'react';
 
 type AlertProps = {

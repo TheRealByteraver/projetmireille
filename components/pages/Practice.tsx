@@ -1,6 +1,6 @@
 'use client';
-import Button from '@/components/ui/Button';
-import LineGraphExercise, { LineGraphExerciseColor } from '@/components/LineGraphExercise';
+import Button from '@/components/ui/generic/Button';
+import LineGraphExercise, { LineGraphExerciseColor } from '@/components/ui/specific/LineGraphExercise';
 import { getExercise } from '@/utils/getExercise';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';

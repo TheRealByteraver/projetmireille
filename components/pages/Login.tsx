@@ -1,6 +1,6 @@
 'use client';
-import Input from '@/components/ui/Input';
-import Button from '../ui/Button';
+import Input from '@/components/ui/generic/Input';
+import Button from '../ui/generic/Button';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useUser } from '@/services/users';

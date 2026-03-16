@@ -1,5 +1,5 @@
 import { classNames } from '@/utils/classNames';
-import PentagonIcon from './ui/PentagonIcon';
+import PentagonIcon from './PentagonIcon';
 import { LineGraphExercise as LineGraphExerciseType } from '@/types/frontend';
 
 const twColors = {

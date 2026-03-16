@@ -1,4 +1,4 @@
-import TextButton from '@/components/ui/TextButton';
+import TextButton from '@/components/ui/generic/TextButton';
 import { ApiExerciseList } from '@/types/apiTypes';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
