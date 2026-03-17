@@ -34,6 +34,7 @@ const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
     setValue,
     reset,
     setFocus,
+    trigger,
     formState: { errors },
   } = useForm<LineGraphExerciseType>({
     defaultValues: {
@@ -48,10 +49,27 @@ const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
   const formValues = watch();
 
   // METHODS
-  const onSubmit: SubmitHandler<LineGraphExerciseType> = (data) => {
-    addExercise(data);
-    reset(undefined, { keepValues: true });
-    setFocus('step');
+  const onSubmit: SubmitHandler<LineGraphExerciseType> = async (data) => {
+    const isValid = await trigger();
+    if (isValid) {
+      addExercise(data);
+      reset(undefined, { keepValues: true });
+      setFocus('step');
+    }
+  };
+
+  const sanitizeFormValues = (values: LineGraphExerciseType): LineGraphExerciseType => {
+    const startNumber = isNaN(values.startNumber) ? 0 : values.startNumber;
+    const nrOfSteps = isNaN(values.nrOfSteps) ? 12 : Math.min(12, Math.max(1, values.nrOfSteps));
+    const questionPosition =
+      isNaN(values.questionPosition) || values.questionPosition < 1 ? 1 : Math.min(nrOfSteps, values.questionPosition);
+
+    return {
+      ...values,
+      startNumber,
+      nrOfSteps,
+      questionPosition,
+    };
   };
 
   // EFFECTS
@@ -73,12 +91,13 @@ const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
     { value: 100, label: '100' },
     { value: 1000, label: '1000' },
   ];
+
   return (
     <>
       <div className="mb-6">
         <LineGraphExercise
           exercise={{
-            ...formValues,
+            ...sanitizeFormValues(formValues),
             difficulty: 'easy',
           }}
           color={formValues.level === 'CE1' ? 'blue' : 'green'}
@@ -127,26 +146,44 @@ const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
         min={0}
         label="Nombre de départ"
         error={errors.startNumber?.message}
-        {...register('startNumber', { valueAsNumber: true, required: true })}
+        {...register('startNumber', {
+          valueAsNumber: true,
+          required: { value: true, message: 'Le nombre de départ est requis' },
+          min: { value: 0, message: 'Le nombre de départ ne peut etre négatif' },
+        })}
       />
 
       <Input
         className="mb-8"
         type="number"
         min={1}
+        max={12}
         label="Nombre de pas"
         error={errors.nrOfSteps?.message}
-        {...register('nrOfSteps', { valueAsNumber: true, required: true })}
+        {...register('nrOfSteps', {
+          valueAsNumber: true,
+          required: { value: true, message: 'Le nombre de pas est requis' },
+          min: { value: 1, message: 'Le nombre de pas ne peut etre inférieur à 1' },
+          max: { value: 12, message: 'Le nombre de pas ne peut etre supérieur à 12' },
+        })}
       />
 
       <Input
         className="mb-6"
         type="number"
         min={1}
-        max={formValues.nrOfSteps}
+        max={isNaN(formValues.nrOfSteps) ? 1 : Math.min(12, formValues.nrOfSteps)}
         label="Position de la question"
         error={errors.questionPosition?.message}
-        {...register('questionPosition', { valueAsNumber: true, required: true })}
+        {...register('questionPosition', {
+          valueAsNumber: true,
+          required: { value: true, message: 'La position de la question est requise' },
+          min: { value: 1, message: 'La position de la question ne peut etre inférieure à 1' },
+          max: {
+            value: isNaN(formValues.nrOfSteps) ? 1 : formValues.nrOfSteps,
+            message: 'La position de la question ne peut etre supérieure au nombre de pas',
+          },
+        })}
       />
 
       <div className="flex w-full justify-end">
