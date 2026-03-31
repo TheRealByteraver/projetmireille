@@ -8,7 +8,7 @@ type Props = {
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  noPadding?: boolean;
+  withPadding?: boolean;
 };
 
 const Button = (props: Props): React.JSX.Element => {
@@ -20,7 +20,7 @@ const Button = (props: Props): React.JSX.Element => {
     children,
     type = 'button',
     disabled = false,
-    noPadding = false,
+    withPadding = true,
   } = props;
 
   // VARS
@@ -63,7 +63,7 @@ const Button = (props: Props): React.JSX.Element => {
         'rounded-md border focus-visible:outline-2 focus-visible:outline-offset-2',
         disabled ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer',
         colors[color],
-        noPadding ? '' : 'px-4 py-2',
+        withPadding ? 'px-4 py-2' : '',
         className,
       )}
       onClick={onClick}

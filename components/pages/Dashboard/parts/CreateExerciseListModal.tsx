@@ -2,7 +2,7 @@ import LineGraphExerciseInputs from '@/components/forms/LineGraphExerciseInputs'
 import { ApiExerciseList, Exercise, ExerciseType } from '@/types/apiTypes';
 import { LineGraphExercise as LineGraphExerciseType } from '@/types/frontend';
 import { useEffect, useMemo, useState } from 'react';
-// import Select, { SingleValue } from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import Button from '../../../ui/generic/Button';
 import { useSaveExerciseList } from '@/services/exerciseList';
 import Input from '../../../ui/generic/Input';
@@ -83,9 +83,9 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
     saveExerciseList(payload);
   };
 
-  // const handleChange = (option: SingleValue<SelectOption>) => {
-  //   setSelectedOption(option);
-  // };
+  const handleChange = (option: SingleValue<SelectOption>) => {
+    setSelectedOption(option);
+  };
 
   const handleAddExercise = (exercise: LineGraphExerciseType) => {
     if (!selectedOption) return;
@@ -104,6 +104,12 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
   const handleRemoveExercise = (index: number) => {
     const newExerciseList = [...exercises.filter((_, i) => i !== index)];
     setExercises(newExerciseList);
+  };
+
+  const handleMoveExercise = (index: number, relativeIndex: number) => {
+    // swap exercise with the one above/ below it
+    const newIndex = index + relativeIndex;
+    setExercises((prev) => [...prev.map((_, i) => prev[i === index ? newIndex : i === newIndex ? index : i])]);
   };
 
   return (
@@ -127,10 +133,15 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
               />
             </div>
 
-            {/* <div className="mb-6">
+            <div className="mb-6">
               <p className="mb-1 text-sm font-bold">Type d&apos;exercice</p>
-              <Select value={selectedOption} onChange={handleChange} options={options} />
-            </div> */}
+              <Select
+                value={selectedOption}
+                onChange={handleChange}
+                options={options}
+                isDisabled={options.length === 1}
+              />
+            </div>
 
             {selectedOption?.value && (
               <div className="rounded-md border border-gray-300 p-4">
@@ -139,7 +150,11 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
             )}
           </div>
 
-          <FullExerciseList exercises={exercises} handleRemoveExercise={handleRemoveExercise} />
+          <FullExerciseList
+            exercises={exercises}
+            handleRemoveExercise={handleRemoveExercise}
+            handleMoveExercise={handleMoveExercise}
+          />
         </div>
       </div>
 

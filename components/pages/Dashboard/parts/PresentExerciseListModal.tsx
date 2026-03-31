@@ -25,6 +25,13 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
     setSolutionsVisible([false, false]);
   };
 
+  const handleToggleExerciseMode = (): void => {
+    if (!exerciseList) return;
+    if (!twoExerciseMode && exerciseIndex === exerciseList.exercises.length - 1 && exerciseIndex > 0)
+      setExerciseIndex(exerciseIndex - 1);
+    setTwoExerciseMode(!twoExerciseMode);
+  };
+
   // VARS
   const isFirstExercise = exerciseList ? exerciseIndex === 0 : true;
   const isLastExercise = exerciseList
@@ -38,7 +45,7 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
       <ToggleButton
         label="Afficher 2 exercices à la fois"
         checked={twoExerciseMode}
-        onChange={() => setTwoExerciseMode(!twoExerciseMode)}
+        onChange={handleToggleExerciseMode}
       />
       <div className="flex h-full flex-col justify-between">
         {!exerciseList && <span>Aucune liste d&apos;exercices trouvée</span>}
