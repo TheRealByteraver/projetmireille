@@ -15,7 +15,7 @@ The frontend connects to a backend API at `http://localhost:5001/api` (configure
 
 ## Architecture
 
-**Projet Mireille** is a Next.js app for French school children (CE1/CE2, ages 9-11) to practice math exercises on number lines. It has two roles: teachers (dashboard to manage exercise lists) and students (practice mode).
+**Droites numériques** is a Next.js app for French school children (CE1/CE2, ages 9-11) to practice math exercises on number lines. It has two roles: teachers (dashboard to manage exercise lists) and students (practice mode).
 
 ### Key patterns
 
@@ -34,6 +34,7 @@ The frontend connects to a backend API at `http://localhost:5001/api` (configure
 ### Exercise system
 
 `utils/getExercise.ts` generates randomized `LineGraphExercise` objects:
+
 - **CE1**: start 0-900, steps from [1,2,5,10,100], 2-10 segments
 - **CE2**: start 0-10000, steps from [1,2,5,10,100,1000], 2-10 segments
 
@@ -42,6 +43,7 @@ The `LineGraphExercise` component renders a number line with a question mark at 
 ### UI conventions (from README)
 
 Button colors carry meaning:
+
 - Blue → navigation
 - Indigo/Purple → authorization actions
 - White/Gray → go back / neutral

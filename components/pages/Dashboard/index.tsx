@@ -84,8 +84,8 @@ const Dashboard = (): React.JSX.Element => {
         text="Êtes-vous sûr de vouloir supprimer cette série d'exercices?"
       />
 
-      <div className="flex h-full w-full flex-col justify-between pb-6">
-        <div className="flex w-full flex-col gap-4 p-4">
+      <div className="flex h-full w-full flex-col justify-between p-4">
+        <div className="flex w-full flex-col gap-4">
           <h1 className="text-2xl font-bold">Tableau de bord</h1>
           {isLoading && <div>Chargement des séries d&apos;exercices...</div>}
           {emptyTable && <div>Aucune série d&apos;exercices trouvée, créez une nouvelle série d&apos;exercices.</div>}
@@ -97,15 +97,13 @@ const Dashboard = (): React.JSX.Element => {
             />
           )}
 
-          <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row">
-            <Button onClick={() => router.push('/')} color="white">
-              Page d&apos;accueil
-            </Button>
-            <Button color="green" onClick={handleCreateExerciseList}>
-              Creer une nouvelle série d&apos;exercises
-            </Button>
-          </div>
+          <Button className="w-full sm:ml-auto sm:w-auto" color="green" onClick={handleCreateExerciseList}>
+            Creer une nouvelle série d&apos;exercises
+          </Button>
         </div>
+        <Button className="w-full sm:mr-auto sm:w-auto" onClick={() => router.push('/')} color="white">
+          Page d&apos;accueil
+        </Button>
       </div>
     </>
   );

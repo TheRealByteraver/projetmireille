@@ -1,6 +1,7 @@
 import { classNames } from '@/utils/classNames';
 import PentagonIcon from './PentagonIcon';
 import { LineGraphExercise as LineGraphExerciseType } from '@/types/frontend';
+import { getSpacedNrStr } from '@/utils/getSpacedNrStr';
 
 const twColors = {
   blue: { textColor: 'text-sky-500', borderColor: 'border-sky-500' },
@@ -35,7 +36,7 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
               'absolute top-5 -left-0.5 mt-3 flex -translate-x-1/2 translate-y-1/2 items-center justify-center sm:top-0'
             }
           >
-            {startNumber}
+            <span className="whitespace-nowrap">{getSpacedNrStr(startNumber)}</span>
           </div>
         </li>
         {Array.from({ length: nrOfSteps - 1 }, (_, i) => (
@@ -52,25 +53,24 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
           </li>
         ))}
         <li className={`border-r-4 border-b-4 border-l-2 ${twColors[color].borderColor} relative flex-1`}>
-          <>
-            {questionPosition === nrOfSteps && (
-              <Icon
-                isSolutionVisible={isSolutionVisible}
-                solution={solution}
-                onClick={showSolution}
-                color={color}
-                interactive={interactive}
-              />
+          {questionPosition === nrOfSteps && (
+            <Icon
+              isSolutionVisible={isSolutionVisible}
+              solution={solution}
+              onClick={showSolution}
+              color={color}
+              interactive={interactive}
+            />
+          )}
+          <div
+            className={classNames(
+              'absolute top-5 left-0.5 mt-3 flex translate-x-1/2 translate-y-1/2 items-center justify-center sm:top-0',
+              'w-full',
+              // 'border-2 border-red-300',
             )}
-            <div
-              className={classNames(
-                'mt-3 flex w-full translate-x-1/2 translate-y-1/2 items-center justify-center',
-                'absolute top-5 left-0.5 sm:top-0',
-              )}
-            >
-              {endNumber}
-            </div>
-          </>
+          >
+            <span className="whitespace-nowrap">{getSpacedNrStr(endNumber)}</span>
+          </div>
         </li>
       </ul>
     </div>
@@ -109,7 +109,7 @@ const Icon = (props: IconProps): React.JSX.Element => {
             twColors[color].textColor,
           )}
         >
-          {solution}
+          <span className="whitespace-nowrap">{getSpacedNrStr(solution)}</span>
         </div>
       )}
     </>

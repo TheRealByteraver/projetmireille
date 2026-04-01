@@ -58,7 +58,7 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
                 ' - ' + (exerciseIndex + 2)} / {exerciseList.exercises.length}
             </h1>
 
-            <div className="flex flex-col gap-4 xl:flex-row">
+            <div className="flex flex-col gap-16">
               <LineGraphExercise
                 exercise={exerciseList.exercises[exerciseIndex].exerciseData}
                 color={exerciseList.exercises[exerciseIndex].exerciseData.level === 'CE1' ? 'blue' : 'green'}

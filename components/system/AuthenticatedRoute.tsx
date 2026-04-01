@@ -24,7 +24,7 @@ const AuthenticatedRoute = (props: Props): React.JSX.Element => {
   if (!user) return <div>Loading...</div>;
 
   return (
-    <div className="flex h-screen w-screen flex-col">
+    <div className="flex h-full w-full flex-col">
       <header className="flex h-8 items-center bg-blue-600 pl-2 font-semibold text-white">
         Utilisateur connecté: {user.firstName} {user.lastName}
       </header>
