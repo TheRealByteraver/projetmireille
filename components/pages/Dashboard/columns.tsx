@@ -1,5 +1,6 @@
 import TextButton from '@/components/ui/generic/TextButton';
 import { ApiExerciseList } from '@/types/apiTypes';
+import getExerciseLevelsString from '@/utils/getExerciseLevelsString';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 const columnHelper = createColumnHelper<ApiExerciseList>();
@@ -21,17 +22,10 @@ const getColumns = (
       header: () => "Nombre d'exercices",
       cell: (info) => info.row.original.exercises.length,
     }),
-
     columnHelper.display({
       id: 'Level',
       header: () => 'Niveaux',
-      cell: (info) => {
-        const levels: string[] = info.row.original.exercises.reduce(
-          (prev, next) => (prev.includes(next.exerciseData.level) ? prev : [...prev, next.exerciseData.level]),
-          [] as string[],
-        );
-        return <span>{levels.join(', ')}</span>;
-      },
+      cell: (info) => <span>{getExerciseLevelsString(info.row.original.exercises)}</span>,
     }),
     columnHelper.display({
       id: 'present',

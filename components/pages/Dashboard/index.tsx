@@ -9,6 +9,10 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import PresentExerciseListModal from './parts/PresentExerciseListModal';
 import Dialog from '@/components/ui/generic/Dialog';
+import SelectForPresentationModal from './SelectForPresentationModal';
+import PresentExerciseListsModal from './parts/PresentExerciseListsModal';
+
+type ModalStates = 'create' | 'present' | 'delete' | 'preview' | 'presentSelect' | null;
 
 const Dashboard = (): React.JSX.Element => {
   // ROUTER
@@ -19,8 +23,9 @@ const Dashboard = (): React.JSX.Element => {
   const { mutate: deleteExerciseList } = useDeleteExerciseList();
   // STATE
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState<'create' | 'present' | 'delete' | null>(null);
+  const [modalMode, setModalMode] = useState<ModalStates>(null);
   const [selectedExerciseListId, setSelectedExerciseListId] = useState<number | null>(null);
+  const [presentExerciseListIds, setPresentExerciseListIds] = useState<number[]>([]);
 
   // METHODS
   const handleCreateExerciseList = () => {
@@ -28,9 +33,14 @@ const Dashboard = (): React.JSX.Element => {
     setIsModalOpen(true);
   };
 
-  const handlePresentExerciseList = (exerciseListId: number) => {
+  const handlePreviewExerciseList = (exerciseListId: number) => {
     setSelectedExerciseListId(exerciseListId);
-    setModalMode('present');
+    setModalMode('preview');
+    setIsModalOpen(true);
+  };
+
+  const handlePresentExerciseList = () => {
+    setModalMode('presentSelect');
     setIsModalOpen(true);
   };
 
@@ -40,12 +50,14 @@ const Dashboard = (): React.JSX.Element => {
   };
 
   const closeModal = () => {
+    setPresentExerciseListIds([]);
     setIsModalOpen(false);
     setModalMode(null);
   };
 
   // VARS
   const emptyTable = exerciseLists.length === 0 && !isLoading && !error;
+  const selectedExerciseList = exerciseLists.find((exerciseList) => exerciseList.id === selectedExerciseListId);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -55,17 +67,36 @@ const Dashboard = (): React.JSX.Element => {
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          fullSize={['create', 'present'].includes(modalMode ?? '')}
+          fullSize={['create', 'preview', 'present'].includes(modalMode ?? '')}
           closeModal={closeModal}
           closeOnOutsideClick={modalMode === 'create' ? false : true}
         >
           {modalMode === 'create' && <CreateExerciseListModal closeModal={closeModal} />}
-          {modalMode === 'present' && (
-            <PresentExerciseListModal
-              exerciseList={exerciseLists.find((exerciseList) => exerciseList.id === selectedExerciseListId)}
+          {modalMode === 'preview' && (
+            <PresentExerciseListModal exerciseList={selectedExerciseList} closeModal={closeModal} />
+          )}
+          {modalMode === 'presentSelect' && (
+            <SelectForPresentationModal
+              exerciseLists={exerciseLists}
+              setExerciseListIds={(ids: number[]) => {
+                setPresentExerciseListIds(ids);
+                setModalMode('present');
+              }}
               closeModal={closeModal}
             />
           )}
+          {modalMode === 'present' &&
+            (presentExerciseListIds.length === 1 ? (
+              <PresentExerciseListModal
+                exerciseList={exerciseLists.find((exerciseList) => presentExerciseListIds.includes(exerciseList.id))}
+                closeModal={closeModal}
+              />
+            ) : (
+              <PresentExerciseListsModal
+                exerciseLists={exerciseLists.filter((exerciseList) => presentExerciseListIds.includes(exerciseList.id))}
+                closeModal={closeModal}
+              />
+            ))}
         </Modal>
       )}
 
@@ -81,7 +112,7 @@ const Dashboard = (): React.JSX.Element => {
           closeModal();
         }}
         title="Supprimer la série d'exercices"
-        text="Êtes-vous sûr de vouloir supprimer cette série d'exercices?"
+        text={`Êtes-vous sûr de vouloir supprimer la série d'exercices nommée "${selectedExerciseList?.name}" ?`}
       />
 
       <div className="flex h-full w-full flex-col justify-between p-4">
@@ -92,14 +123,20 @@ const Dashboard = (): React.JSX.Element => {
           {!emptyTable && (
             <ReactTable
               data={exerciseLists}
-              columns={getColumns(handlePresentExerciseList, handleDeleteExerciseList)}
+              columns={getColumns(handlePreviewExerciseList, handleDeleteExerciseList)}
               showColumnsWidths={['md', '', 'md', 'sm', '', '']}
             />
           )}
 
-          <Button className="w-full sm:ml-auto sm:w-auto" color="green" onClick={handleCreateExerciseList}>
-            Creer une nouvelle série d&apos;exercises
-          </Button>
+          <div className="flex w-full flex-col gap-4 sm:flex-row sm:justify-between">
+            <Button className="w-full sm:w-auto" color="green" onClick={handlePresentExerciseList}>
+              Présenter plusieurs séries d&apos;exercices
+            </Button>
+
+            <Button className="w-full sm:w-auto" color="green" onClick={handleCreateExerciseList}>
+              Créer une nouvelle série d&apos;exercices
+            </Button>
+          </div>
         </div>
         <Button className="w-full sm:mr-auto sm:w-auto" onClick={() => router.push('/')} color="white">
           Page d&apos;accueil

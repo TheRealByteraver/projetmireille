@@ -4,6 +4,7 @@ import Button from '../../../ui/generic/Button';
 import LineGraphExercise from '../../../ui/specific/LineGraphExercise';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import ToggleButton from '../../../ui/generic/ToggleButton';
+import getExerciseLevelsString from '@/utils/getExerciseLevelsString';
 
 type Props = {
   exerciseList?: ApiExerciseList;
@@ -40,10 +41,14 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
       : exerciseIndex === exerciseList.exercises.length - 1
     : true;
 
+  const multipleExercisesString = exerciseList && exerciseList.exercises.length > 1 ? 's' : '';
+  const exerciseLevelsString = exerciseList ? getExerciseLevelsString(exerciseList.exercises) : '';
+  const multipleLevelsSuffix = exerciseLevelsString.includes(',') ? 'x' : '';
+
   return (
     <div className="flex h-full flex-col gap-4 p-4">
       <ToggleButton
-        label="Afficher 2 exercices à la fois"
+        label="Afficher les exercices par paire"
         checked={twoExerciseMode}
         onChange={handleToggleExerciseMode}
       />
@@ -51,12 +56,20 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
         {!exerciseList && <span>Aucune liste d&apos;exercices trouvée</span>}
         {exerciseList && (
           <div className="flex flex-col gap-4">
-            <h1 className="text-2xl font-bold">
-              Exercice {exerciseIndex + 1}
-              {twoExerciseMode &&
-                exerciseIndex + 1 < exerciseList.exercises.length &&
-                ' - ' + (exerciseIndex + 2)} / {exerciseList.exercises.length}
-            </h1>
+            <div className="mb-4 flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
+              <h1 className="text-2xl font-bold">{exerciseList.name}</h1>
+              <p className="text-sm text-gray-500">
+                {exerciseList.exercises.length} exercice{multipleExercisesString}, niveau
+                {multipleLevelsSuffix} {exerciseLevelsString}
+              </p>
+
+              <p className="text-lg font-bold sm:ml-auto">
+                Exercice {exerciseIndex + 1}
+                {twoExerciseMode &&
+                  exerciseIndex + 1 < exerciseList.exercises.length &&
+                  ' - ' + (exerciseIndex + 2)} / {exerciseList.exercises.length}
+              </p>
+            </div>
 
             <div className="flex flex-col gap-16">
               <LineGraphExercise
@@ -98,7 +111,8 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
             </div>
           </div>
         )}
-        <Button className="ml-auto" onClick={closeModal}>
+
+        <Button className="w-full sm:mr-auto sm:w-auto" onClick={closeModal}>
           Fermer
         </Button>
       </div>
