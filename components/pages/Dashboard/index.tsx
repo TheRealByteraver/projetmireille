@@ -115,7 +115,7 @@ const Dashboard = (): React.JSX.Element => {
         text={`Êtes-vous sûr de vouloir supprimer la série d'exercices nommée "${selectedExerciseList?.name}" ?`}
       />
 
-      <div className="flex h-full w-full flex-col justify-between p-4">
+      <div className="flex h-full w-full flex-col justify-between gap-4 p-4">
         <div className="flex w-full flex-col gap-4">
           <h1 className="text-2xl font-bold">Tableau de bord</h1>
           {isLoading && <div>Chargement des séries d&apos;exercices...</div>}
