@@ -9,7 +9,7 @@ type Props = {
   closeOnOutsideClick?: boolean;
 };
 
-const Modal = (props: Props): React.JSX.Element => {
+const Modal = (props: Props): React.JSX.Element | null => {
   // PROPS
   const { isOpen, children, fullSize = false, closeModal, closeOnOutsideClick = true } = props;
 
@@ -21,27 +21,26 @@ const Modal = (props: Props): React.JSX.Element => {
     if (isOpen) contentRef.current?.focus();
   }, [isOpen]);
 
+  if (!isOpen) return null;
+
   return (
-    <>
-      {isOpen && (
-        <div
-          className={classNames(
-            'absolute z-11 flex h-screen w-screen flex-col items-center justify-center bg-black/50 p-4 sm:p-8',
-            fullSize ? 'h-screen w-screen' : '',
-          )}
-          onClick={closeOnOutsideClick ? closeModal : undefined}
-        >
-          <div
-            ref={contentRef}
-            className={classNames('rounded-md bg-white', fullSize ? 'h-full w-full' : '')}
-            tabIndex={-1}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {children}
-          </div>
-        </div>
+    <div
+      className={classNames(
+        'absolute z-11 flex h-full w-full flex-col items-center justify-center bg-black/50 p-4 sm:p-8',
+        // 'overflow-hidden overscroll-contain',
+        // fullSize ? 'h-full w-full' : '',
       )}
-    </>
+      onClick={closeOnOutsideClick ? closeModal : undefined}
+    >
+      <div
+        ref={contentRef}
+        className={classNames('rounded-md bg-white', fullSize ? 'h-full w-full' : '')}
+        tabIndex={-1}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {children}
+      </div>
+    </div>
   );
 };
 

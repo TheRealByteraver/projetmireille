@@ -35,6 +35,7 @@ const SelectForPresentationModal = (props: Props): React.JSX.Element => {
         value={selectOptions.filter((option) => selectedIds.includes(option.value))}
         onChange={(option) => setSelectedIds(option.map((option) => option.value))}
         isOptionDisabled={() => selectedIds.length >= 2}
+        isSearchable={false} // disable keyboard on mobile
         isMulti
       />
 

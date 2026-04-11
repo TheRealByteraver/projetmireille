@@ -46,7 +46,7 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
   const multipleLevelsSuffix = exerciseLevelsString.includes(',') ? 'x' : '';
 
   return (
-    <div className="flex h-full flex-col gap-4 p-4">
+    <div className="flex h-full flex-col gap-4 overflow-y-auto p-4">
       <ToggleButton
         label="Afficher les exercices par paire"
         checked={twoExerciseMode}
@@ -112,7 +112,7 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
           </div>
         )}
 
-        <Button className="w-full sm:mr-auto sm:w-auto" onClick={closeModal}>
+        <Button className="mt-4 w-full sm:mr-auto sm:w-auto" onClick={closeModal}>
           Fermer
         </Button>
       </div>
