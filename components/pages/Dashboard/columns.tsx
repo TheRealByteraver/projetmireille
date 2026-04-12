@@ -31,7 +31,7 @@ const getColumns = (
       id: 'present',
       header: () => '',
       cell: (info) => (
-        <TextButton color="green" text="Présenter" onClick={() => presentExerciseList(info.row.original.id)} />
+        <TextButton color="green" text="Aperçu" onClick={() => presentExerciseList(info.row.original.id)} />
       ),
     }),
     // columnHelper.display({

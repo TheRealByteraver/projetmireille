@@ -11,6 +11,7 @@ import PresentExerciseListModal from './parts/PresentExerciseListModal';
 import Dialog from '@/components/ui/generic/Dialog';
 import SelectForPresentationModal from './SelectForPresentationModal';
 import PresentExerciseListsModal from './parts/PresentExerciseListsModal';
+import PreviewExerciseListModal from './parts/PreviewExerciseListModal';
 
 type ModalStates = 'create' | 'present' | 'delete' | 'preview' | 'presentSelect' | null;
 
@@ -72,8 +73,8 @@ const Dashboard = (): React.JSX.Element => {
           closeOnOutsideClick={modalMode === 'create' ? false : true}
         >
           {modalMode === 'create' && <CreateExerciseListModal closeModal={closeModal} />}
-          {modalMode === 'preview' && (
-            <PresentExerciseListModal exerciseList={selectedExerciseList} closeModal={closeModal} />
+          {modalMode === 'preview' && selectedExerciseList && (
+            <PreviewExerciseListModal exerciseList={selectedExerciseList} closeModal={closeModal} />
           )}
           {modalMode === 'presentSelect' && (
             <SelectForPresentationModal
@@ -130,7 +131,7 @@ const Dashboard = (): React.JSX.Element => {
 
           <div className="flex w-full flex-col gap-4 sm:flex-row sm:justify-between">
             <Button className="w-full sm:w-auto" color="green" onClick={handlePresentExerciseList}>
-              Présenter plusieurs séries d&apos;exercices
+              Présenter séries d&apos;exercices
             </Button>
 
             <Button className="w-full sm:w-auto" color="green" onClick={handleCreateExerciseList}>
