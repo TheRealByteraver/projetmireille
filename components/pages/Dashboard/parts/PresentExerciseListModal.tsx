@@ -47,75 +47,74 @@ const PresentExerciseListModal = (props: Props): React.JSX.Element => {
 
   return (
     <div className="flex h-full flex-col gap-4 overflow-y-auto p-4">
-      <ToggleButton
-        label="Afficher les exercices par paire"
-        checked={twoExerciseMode}
-        onChange={handleToggleExerciseMode}
-      />
-      <div className="flex h-full flex-col justify-between">
-        {!exerciseList && <span>Aucune liste d&apos;exercices trouvée</span>}
-        {exerciseList && (
-          <div className="flex flex-col gap-4">
-            <div className="mb-4 flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
-              <h1 className="text-2xl font-bold">{exerciseList.name}</h1>
-              <p className="text-sm text-gray-500">
-                {exerciseList.exercises.length} exercice{multipleExercisesString}, niveau
-                {multipleLevelsSuffix} {exerciseLevelsString}
-              </p>
+      {!exerciseList && <p>Aucune liste d&apos;exercices trouvée</p>}
+      {exerciseList && (
+        <>
+          <ToggleButton
+            label="Afficher les exercices par paire"
+            checked={twoExerciseMode}
+            onChange={handleToggleExerciseMode}
+          />
 
-              <p className="text-lg font-bold sm:ml-auto">
-                Exercice {exerciseIndex + 1}
-                {twoExerciseMode &&
-                  exerciseIndex + 1 < exerciseList.exercises.length &&
-                  ' - ' + (exerciseIndex + 2)} / {exerciseList.exercises.length}
-              </p>
-            </div>
+          <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
+            <h1 className="text-2xl font-bold">{exerciseList.name}</h1>
+            <p className="text-sm text-gray-500">
+              {exerciseList.exercises.length} exercice{multipleExercisesString}, niveau
+              {multipleLevelsSuffix} {exerciseLevelsString}
+            </p>
 
-            <div className="flex flex-col gap-16">
-              <LineGraphExercise
-                exercise={exerciseList.exercises[exerciseIndex].exerciseData}
-                color={exerciseList.exercises[exerciseIndex].exerciseData.level === 'CE1' ? 'blue' : 'green'}
-                isSolutionVisible={solutionsVisible[0]}
-                showSolution={() => setSolutionsVisible((prev) => [true, prev[1]])}
-              />
-              {twoExerciseMode && exerciseIndex + 1 < exerciseList.exercises.length && (
-                <LineGraphExercise
-                  exercise={exerciseList.exercises[exerciseIndex + 1].exerciseData}
-                  color={exerciseList.exercises[exerciseIndex + 1].exerciseData.level === 'CE1' ? 'blue' : 'green'}
-                  isSolutionVisible={solutionsVisible[1]}
-                  showSolution={() => setSolutionsVisible((prev) => [prev[0], true])}
-                />
-              )}
-            </div>
-
-            <div className="flex justify-between gap-2">
-              <Button
-                className="flex flex-row items-center gap-2"
-                color="blue"
-                disabled={isFirstExercise}
-                onClick={() => handleNextExercise(-(twoExerciseMode ? 2 : 1))}
-              >
-                <ChevronLeftIcon className="size-5" />
-                <span>Précédent</span>
-              </Button>
-
-              <Button
-                className="flex flex-row items-center gap-2"
-                color="blue"
-                disabled={isLastExercise}
-                onClick={() => handleNextExercise(twoExerciseMode ? 2 : 1)}
-              >
-                <span>Suivant</span>
-                <ChevronRightIcon className="size-5" />
-              </Button>
-            </div>
+            <p className="text-lg font-bold sm:ml-auto">
+              Exercice {exerciseIndex + 1}
+              {twoExerciseMode &&
+                exerciseIndex + 1 < exerciseList.exercises.length &&
+                ' - ' + (exerciseIndex + 2)} / {exerciseList.exercises.length}
+            </p>
           </div>
-        )}
 
-        <Button className="mt-4 w-full sm:mr-auto sm:w-auto" onClick={closeModal}>
-          Fermer
-        </Button>
-      </div>
+          <div className="flex flex-col gap-16">
+            <LineGraphExercise
+              exercise={exerciseList.exercises[exerciseIndex].exerciseData}
+              color={exerciseList.exercises[exerciseIndex].exerciseData.level === 'CE1' ? 'blue' : 'green'}
+              isSolutionVisible={solutionsVisible[0]}
+              showSolution={() => setSolutionsVisible((prev) => [true, prev[1]])}
+            />
+            {twoExerciseMode && exerciseIndex + 1 < exerciseList.exercises.length && (
+              <LineGraphExercise
+                exercise={exerciseList.exercises[exerciseIndex + 1].exerciseData}
+                color={exerciseList.exercises[exerciseIndex + 1].exerciseData.level === 'CE1' ? 'blue' : 'green'}
+                isSolutionVisible={solutionsVisible[1]}
+                showSolution={() => setSolutionsVisible((prev) => [prev[0], true])}
+              />
+            )}
+          </div>
+
+          <div className="flex justify-between gap-2">
+            <Button
+              className="flex flex-row items-center gap-2"
+              color="blue"
+              disabled={isFirstExercise}
+              onClick={() => handleNextExercise(-(twoExerciseMode ? 2 : 1))}
+            >
+              <ChevronLeftIcon className="size-5" />
+              <span>Précédent</span>
+            </Button>
+
+            <Button
+              className="flex flex-row items-center gap-2"
+              color="blue"
+              disabled={isLastExercise}
+              onClick={() => handleNextExercise(twoExerciseMode ? 2 : 1)}
+            >
+              <span>Suivant</span>
+              <ChevronRightIcon className="size-5" />
+            </Button>
+          </div>
+        </>
+      )}
+
+      <Button className="mt-auto w-full sm:mr-auto sm:w-auto" onClick={closeModal}>
+        Fermer
+      </Button>
     </div>
   );
 };
