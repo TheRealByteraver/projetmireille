@@ -9,6 +9,7 @@ type Props = {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   withPadding?: boolean;
+  ref?: React.Ref<HTMLButtonElement>;
 };
 
 const Button = (props: Props): React.JSX.Element => {
@@ -21,6 +22,7 @@ const Button = (props: Props): React.JSX.Element => {
     type = 'button',
     disabled = false,
     withPadding = true,
+    ref,
   } = props;
 
   // VARS
@@ -69,6 +71,7 @@ const Button = (props: Props): React.JSX.Element => {
       onClick={onClick}
       type={type}
       disabled={disabled}
+      ref={ref}
     >
       {children}
     </button>

@@ -66,7 +66,6 @@ const LineGraphExercise = (props: Props): React.JSX.Element => {
             className={classNames(
               'absolute top-5 left-0.5 mt-3 flex translate-x-1/2 translate-y-1/2 items-center justify-center sm:top-0',
               'w-full',
-              // 'border-2 border-red-300',
             )}
           >
             <span className="whitespace-nowrap">{getSpacedNrStr(endNumber)}</span>
@@ -90,7 +89,7 @@ const Icon = (props: IconProps): React.JSX.Element => {
   const { isSolutionVisible, solution, onClick, color, interactive = true } = props;
 
   // VARS
-  const iconClassName = interactive ? 'hover:cursor-pointer' : '';
+  const iconClassName = interactive ? 'hover:cursor-pointer' : 'cursor-default';
 
   return (
     <>
@@ -98,14 +97,13 @@ const Icon = (props: IconProps): React.JSX.Element => {
         className={classNames('absolute bottom-3 -left-0.5 h-12 w-12 -translate-x-1/2', iconClassName)}
         onClick={interactive ? onClick : undefined}
       >
-        <PentagonIcon color={color} />
+        <PentagonIcon color={color} isSolutionVisible={isSolutionVisible} />
       </div>
       {isSolutionVisible && (
         <div
           className={classNames(
             'absolute -left-0.5 -translate-x-1/2 translate-y-1/2',
             'mt-3 flex w-auto items-center justify-center font-semibold',
-            // '-top-1  rounded-md border-2 border-red-300 bg-white/30 px-1 backdrop-blur-[1px]',
             twColors[color].textColor,
           )}
         >

@@ -12,11 +12,12 @@ const STROKE_MAP: Record<PentagonIconColor, string> = {
 
 type Props = {
   color: PentagonIconColor;
+  isSolutionVisible: boolean;
 };
 
 const PentagonIcon = (props: Props): React.JSX.Element => {
   // PROPS
-  const { color } = props;
+  const { color, isSolutionVisible } = props;
 
   // VARS
   const fillColor = FILL_MAP[color];
@@ -34,7 +35,7 @@ const PentagonIcon = (props: Props): React.JSX.Element => {
         fontWeight="normal"
         fontFamily="system-ui, sans-serif"
       >
-        ?
+        {isSolutionVisible ? '' : '?'}
       </text>
     </svg>
   );

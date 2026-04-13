@@ -1,57 +1,80 @@
-import { ClassLevel } from '@/types/apiTypes';
+// import { ClassLevel } from '@/types/apiTypes';
 import { LineGraphExercise } from '@/types/frontend';
 
-type ExerciseConfig = {
-  startValueRange: number[];
-  stepOptions: number[];
-  nrOfStepsRange: number[];
+// type ExerciseConfig = {
+//   startValueRange: number[];
+//   stepOptions: number[];
+//   nrOfStepsRange: number[];
+// };
+
+// const classLevelConfig: Record<ClassLevel, ExerciseConfig> = {
+//   CE1: {
+//     startValueRange: [0, 900],
+//     stepOptions: [1, 2, 5, 10, 100],
+//     nrOfStepsRange: [2, 10],
+//   },
+//   CE2: {
+//     startValueRange: [0, 10000],
+//     stepOptions: [1, 2, 5, 10, 100, 1000],
+//     nrOfStepsRange: [2, 10],
+//   },
+// };
+
+// const getStep = (classLevel: ClassLevel): number => {
+//   const nrOfOptions = classLevelConfig[classLevel].stepOptions.length;
+//   const randomIndex = Math.floor(Math.random() * nrOfOptions);
+//   return classLevelConfig[classLevel].stepOptions[randomIndex];
+// };
+
+// const getNrOfSteps = (classLevel: ClassLevel): number => {
+//   const [start, end] = classLevelConfig[classLevel].nrOfStepsRange;
+//   const delta = end - start;
+//   return Math.floor(Math.random() * delta) + start; // 2..9
+// };
+
+// const getStartNumber = (classLevel: ClassLevel, step: number): number => {
+//   const rndMult = Math.floor(
+//     (classLevelConfig[classLevel].startValueRange[1] - classLevelConfig[classLevel].startValueRange[0]) / step,
+//   );
+//   return classLevelConfig[classLevel].startValueRange[0] + Math.floor(Math.random() * rndMult + 1) * step;
+// };
+
+// const getExercise = (classLevel: ClassLevel): LineGraphExercise => {
+//   const step = getStep(classLevel);
+//   const nrOfSteps = getNrOfSteps(classLevel);
+//   const startNumber = getStartNumber(classLevel, step);
+//   const questionPosition = 1 + Math.floor(Math.random() * nrOfSteps);
+
+//   return {
+//     startNumber,
+//     step,
+//     questionPosition,
+//     nrOfSteps: nrOfSteps,
+//     level: classLevel,
+//     difficulty: 'easy', // TODO
+//   };
+// };
+
+// returns integer in range [start, end] (inclusive)
+const getRandomFromRange = (start: number, end: number): number => {
+  const delta = Math.abs(end - start + 1);
+  return start + Math.trunc(Math.random() * delta);
 };
 
-const classLevelConfig: Record<ClassLevel, ExerciseConfig> = {
-  CE1: {
-    startValueRange: [0, 900],
-    stepOptions: [1, 2, 5, 10, 100],
-    nrOfStepsRange: [2, 10],
-  },
-  CE2: {
-    startValueRange: [0, 10000],
-    stepOptions: [1, 2, 5, 10, 100, 1000],
-    nrOfStepsRange: [2, 10],
-  },
-};
-
-const getStep = (classLevel: ClassLevel): number => {
-  const nrOfOptions = classLevelConfig[classLevel].stepOptions.length;
-  const randomIndex = Math.floor(Math.random() * nrOfOptions);
-  return classLevelConfig[classLevel].stepOptions[randomIndex];
-};
-
-const getNrOfSteps = (classLevel: ClassLevel): number => {
-  const [start, end] = classLevelConfig[classLevel].nrOfStepsRange;
-  const delta = end - start;
-  return Math.floor(Math.random() * delta) + start; // 2..9
-};
-
-const getStartNumber = (classLevel: ClassLevel, step: number): number => {
-  const rndMult = Math.floor(
-    (classLevelConfig[classLevel].startValueRange[1] - classLevelConfig[classLevel].startValueRange[0]) / step,
-  );
-  return classLevelConfig[classLevel].startValueRange[0] + Math.floor(Math.random() * rndMult + 1) * step;
-};
-
-const getExercise = (classLevel: ClassLevel): LineGraphExercise => {
-  const step = getStep(classLevel);
-  const nrOfSteps = getNrOfSteps(classLevel);
-  const startNumber = getStartNumber(classLevel, step);
-  const questionPosition = 1 + Math.floor(Math.random() * nrOfSteps);
+const getExercise = (minStart: number, maxEnd: number, step: number): LineGraphExercise => {
+  const nrOfSteps = getRandomFromRange(2, 10);
+  const practicalMaxEnd = maxEnd - (nrOfSteps + 1) * step;
+  const start = getRandomFromRange(minStart, practicalMaxEnd);
+  const startNumber = Math.max(0, start - (start % step));
+  const questionPosition = getRandomFromRange(1, nrOfSteps);
 
   return {
     startNumber,
     step,
     questionPosition,
-    nrOfSteps: nrOfSteps,
-    level: classLevel,
-    difficulty: 'easy', // TODO
+    nrOfSteps,
+    level: 'CE1', // IGNORED
+    difficulty: 'easy', // IGNORED
   };
 };
 

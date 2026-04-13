@@ -41,4 +41,6 @@ type LineGraphExercise = {
   difficulty: Difficulty;
 };
 
-export type { LineGraphExercise, ButtonColors, User, CurrentUser, ExerciseList };
+type RadioOption = { label: string; value: string; enabled: boolean };
+
+export type { LineGraphExercise, ButtonColors, User, CurrentUser, ExerciseList, RadioOption };
