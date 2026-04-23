@@ -156,17 +156,19 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
             )}
           </div>
 
-          <FullExerciseList
-            exercises={exercises}
-            handleRemoveExercise={handleRemoveExercise}
-            handleMoveExercise={handleMoveExercise}
-          />
+          {exercises.length > 0 && (
+            <FullExerciseList
+              exercises={exercises}
+              handleRemoveExercise={handleRemoveExercise}
+              handleMoveExercise={handleMoveExercise}
+            />
+          )}
         </div>
       </div>
 
-      <div className="mt-4 flex justify-between">
+      <div className="mt-4 flex flex-col-reverse gap-4 sm:flex-row sm:justify-between">
         <Button onClick={closeModal}>{status === 'success' ? 'Fermer' : 'Annuler'}</Button>
-        <Button color="green" type="submit">
+        <Button color="green" type="submit" disabled={exercises.length === 0}>
           Sauvegarder la liste
         </Button>
       </div>

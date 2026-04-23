@@ -158,7 +158,7 @@ const EditExerciseListModal = (props: Props): React.JSX.Element => {
         </div>
       </div>
 
-      <div className="mt-4 flex justify-between">
+      <div className="mt-4 flex flex-col-reverse gap-4 sm:flex-row sm:justify-between">
         <Button onClick={closeModal}>{status === 'success' ? 'Fermer' : 'Annuler'}</Button>
         <Button color="green" type="submit">
           Enregistrer les modifications
