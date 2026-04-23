@@ -12,8 +12,9 @@ import Dialog from '@/components/ui/generic/Dialog';
 import SelectForPresentationModal from './SelectForPresentationModal';
 import PresentExerciseListsModal from './parts/PresentExerciseListsModal';
 import PreviewExerciseListModal from './parts/PreviewExerciseListModal';
+import EditExerciseListModal from './parts/EditExerciseListModal';
 
-type ModalStates = 'create' | 'present' | 'delete' | 'preview' | 'presentSelect' | null;
+type ModalStates = 'create' | 'present' | 'delete' | 'preview' | 'presentSelect' | 'edit' | null;
 
 const Dashboard = (): React.JSX.Element => {
   // ROUTER
@@ -34,14 +35,20 @@ const Dashboard = (): React.JSX.Element => {
     setIsModalOpen(true);
   };
 
+  const handlePresentExerciseList = () => {
+    setModalMode('presentSelect');
+    setIsModalOpen(true);
+  };
+
   const handlePreviewExerciseList = (exerciseListId: number) => {
     setSelectedExerciseListId(exerciseListId);
     setModalMode('preview');
     setIsModalOpen(true);
   };
 
-  const handlePresentExerciseList = () => {
-    setModalMode('presentSelect');
+  const handleEditExerciseList = (exerciseListId: number) => {
+    setSelectedExerciseListId(exerciseListId);
+    setModalMode('edit');
     setIsModalOpen(true);
   };
 
@@ -68,13 +75,16 @@ const Dashboard = (): React.JSX.Element => {
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          fullSize={['create', 'preview', 'present'].includes(modalMode ?? '')}
+          fullSize={['create', 'preview', 'present', 'edit'].includes(modalMode ?? '')}
           closeModal={closeModal}
-          closeOnOutsideClick={modalMode === 'create' ? false : true}
+          closeOnOutsideClick={['create', 'edit'].includes(modalMode ?? '') ? false : true}
         >
           {modalMode === 'create' && <CreateExerciseListModal closeModal={closeModal} />}
           {modalMode === 'preview' && selectedExerciseList && (
             <PreviewExerciseListModal exerciseList={selectedExerciseList} closeModal={closeModal} />
+          )}
+          {modalMode === 'edit' && selectedExerciseList && (
+            <EditExerciseListModal exerciseList={selectedExerciseList} closeModal={closeModal} />
           )}
           {modalMode === 'presentSelect' && (
             <SelectForPresentationModal
@@ -124,7 +134,7 @@ const Dashboard = (): React.JSX.Element => {
           {!emptyTable && (
             <ReactTable
               data={exerciseLists}
-              columns={getColumns(handlePreviewExerciseList, handleDeleteExerciseList)}
+              columns={getColumns(handlePreviewExerciseList, handleEditExerciseList, handleDeleteExerciseList)}
               showColumnsWidths={['md', '', 'md', 'sm', '', '']}
             />
           )}

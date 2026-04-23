@@ -2,6 +2,7 @@ import Button from '@/components/ui/generic/Button';
 import LineGraphExercise from '@/components/ui/specific/LineGraphExercise';
 import { ApiExerciseList } from '@/types/apiTypes';
 import getExerciseLevelsString from '@/utils/getExerciseLevelsString';
+import { useState } from 'react';
 
 type Props = {
   exerciseList: ApiExerciseList;
@@ -11,6 +12,9 @@ type Props = {
 const PreviewExerciseListModal = (props: Props): React.JSX.Element => {
   // PROPS
   const { exerciseList, closeModal } = props;
+
+  // STATE
+  const [solutionsVisible, setSolutionsVisible] = useState<boolean[]>(Array(exerciseList.exercises.length).fill(false));
 
   // VARS
   const multipleExercisesString = exerciseList.exercises.length > 1 ? 's' : '';
@@ -37,7 +41,8 @@ const PreviewExerciseListModal = (props: Props): React.JSX.Element => {
             <LineGraphExercise
               exercise={exercise.exerciseData}
               color={exercise.exerciseData.level === 'CE1' ? 'blue' : 'green'}
-              isSolutionVisible={true}
+              isSolutionVisible={solutionsVisible[index]}
+              showSolution={() => setSolutionsVisible((prev) => prev.map((state, i) => (i === index ? true : state)))}
             />
           </li>
         ))}

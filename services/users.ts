@@ -5,7 +5,6 @@ const USERS = 'users';
 
 // ****************************************************************************
 // GET USER
-
 type Credentials = {
   username: string;
   password: string;
@@ -23,7 +22,10 @@ const fetchUser = async (credentials: Credentials): Promise<ApiUser> => {
   });
 
   const data = await response.json();
-  return data;
+  return {
+    ...data,
+    roles: data.roles.split(','),
+  };
 };
 
 const useUser = (credentials: Credentials, enabled?: boolean): UseQueryResult<ApiUser, Error> =>
@@ -34,7 +36,6 @@ const useUser = (credentials: Credentials, enabled?: boolean): UseQueryResult<Ap
   });
 
 // ****************************************************************************
-//
 
 export { useUser };
 

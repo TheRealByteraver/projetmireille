@@ -4,12 +4,11 @@ import { LineGraphExercise as LineGraphExerciseType } from '@/types/frontend';
 import { useEffect, useMemo, useState } from 'react';
 import Select, { SingleValue } from 'react-select';
 import Button from '../../../ui/generic/Button';
-import { useSaveExerciseList } from '@/services/exerciseList';
+import { useEditExerciseList } from '@/services/exerciseList';
 import Input from '../../../ui/generic/Input';
 import useAlert from '@/hooks/useAlert';
 import { useForm } from 'react-hook-form';
 import FullExerciseList from '../FullExerciseList';
-import useCurrentUser from '@/hooks/useCurrentUser';
 
 type SelectOption = {
   value: ExerciseType;
@@ -21,18 +20,16 @@ type FormValues = {
 };
 
 type Props = {
+  exerciseList: ApiExerciseList;
   closeModal: () => void;
 };
 
-const CreateExerciseListModal = (props: Props): React.JSX.Element => {
+const EditExerciseListModal = (props: Props): React.JSX.Element => {
   // PROPS
-  const { closeModal } = props;
-
-  // AUTH
-  const [user] = useCurrentUser();
+  const { exerciseList, closeModal } = props;
 
   // RQ
-  const { mutate: saveExerciseList, status, error } = useSaveExerciseList();
+  const { mutate: editExerciseList, status, error } = useEditExerciseList();
 
   // RHF
   const {
@@ -40,7 +37,11 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({
+    values: {
+      listName: exerciseList.name,
+    },
+  });
 
   // HOOKS
   const [alert, setAlert, clearAlert] = useAlert();
@@ -50,7 +51,7 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
 
   // STATE
   const [selectedOption, setSelectedOption] = useState<SelectOption | null>(options[0]);
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [exercises, setExercises] = useState<Exercise[]>(exerciseList.exercises);
 
   // EFFECTS
   useEffect(() => {
@@ -61,32 +62,30 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
         alertType: status,
         message:
           'Liste sauvegardée avec succès. ' +
-          'Cliquez sur "Fermer" pour revenir au tableau de bord, ou créez une nouvelle liste.',
+          'Cliquez sur "Fermer" pour revenir au tableau de bord, ou continuez à modifier la liste.',
       });
-      setTimeout(() => {
-        setExercises([]);
-        reset();
-        setSelectedOption(options[0]);
-      }, 1);
+      //   setTimeout(() => {
+      //     setExercises([]);
+      //     reset();
+      //     setSelectedOption(options[0]);
+      //   }, 1);
     }
   }, [status, error, setAlert, reset, setSelectedOption, options]);
 
   // METHODS
-  const handleSaveExerciseList = (data: FormValues) => {
-    if (!user) return;
-
+  const handleEditExerciseList = (data: FormValues) => {
     clearAlert();
 
     const payload: ApiExerciseList = {
-      id: 0,
+      id: exerciseList.id,
       name: data.listName,
-      userID: user.id,
+      userID: exerciseList.userID,
       exercises: exercises,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    saveExerciseList(payload);
+    editExerciseList(payload);
   };
 
   const handleChange = (option: SingleValue<SelectOption>) => {
@@ -121,10 +120,10 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
   return (
     <form
       className="h-full w-full overflow-auto p-4 sm:flex sm:flex-col sm:justify-between sm:overflow-auto"
-      onSubmit={handleSubmit(handleSaveExerciseList)}
+      onSubmit={handleSubmit(handleEditExerciseList)}
     >
       <div className="xl:flex xl:h-full xl:flex-col xl:overflow-hidden">
-        <h1 className="mb-4 text-2xl font-bold">Créer une liste d&apos;exercices</h1>
+        <h1 className="mb-4 text-2xl font-bold">Edition de la liste &quot;{exerciseList.name}&quot;</h1>
         {alert && <div className="mb-4">{alert}</div>}
         <div className="xl:flex xl:h-full xl:w-full xl:flex-row xl:gap-4 xl:overflow-hidden">
           <div className="w-full xl:flex xl:flex-col xl:overflow-auto">
@@ -167,11 +166,11 @@ const CreateExerciseListModal = (props: Props): React.JSX.Element => {
       <div className="mt-4 flex justify-between">
         <Button onClick={closeModal}>{status === 'success' ? 'Fermer' : 'Annuler'}</Button>
         <Button color="green" type="submit">
-          Sauvegarder la liste
+          Enregistrer les modifications
         </Button>
       </div>
     </form>
   );
 };
 
-export default CreateExerciseListModal;
+export default EditExerciseListModal;

@@ -17,10 +17,12 @@ type User = {
 };
 
 type CurrentUser = {
+  id: number;
   firstName?: string;
   lastName?: string;
   username?: string;
   authorization?: string;
+  roles: Role[];
 };
 
 type ExerciseList = {

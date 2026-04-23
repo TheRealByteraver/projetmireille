@@ -7,6 +7,7 @@ const columnHelper = createColumnHelper<ApiExerciseList>();
 
 const getColumns = (
   presentExerciseList: (exerciseListId: number) => void,
+  editExerciseList: (exerciseListId: number) => void,
   deleteExerciseList: (exerciseListId: number) => void,
 ): ColumnDef<ApiExerciseList>[] =>
   [
@@ -28,17 +29,19 @@ const getColumns = (
       cell: (info) => <span>{getExerciseLevelsString(info.row.original.exercises)}</span>,
     }),
     columnHelper.display({
-      id: 'present',
+      id: 'preview',
       header: () => '',
       cell: (info) => (
         <TextButton color="green" text="Aperçu" onClick={() => presentExerciseList(info.row.original.id)} />
       ),
     }),
-    // columnHelper.display({
-    //   id: 'edit',
-    //   header: () => '',
-    //   cell: () => <TextButton color="yellow" text="Modifier" />,
-    // }),
+    columnHelper.display({
+      id: 'edit',
+      header: () => '',
+      cell: (info) => (
+        <TextButton color="yellow" text="Modifier" onClick={() => editExerciseList(info.row.original.id)} />
+      ),
+    }),
     columnHelper.display({
       id: 'delete',
       header: () => '',
