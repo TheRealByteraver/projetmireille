@@ -64,11 +64,6 @@ const EditExerciseListModal = (props: Props): React.JSX.Element => {
           'Liste sauvegardée avec succès. ' +
           'Cliquez sur "Fermer" pour revenir au tableau de bord, ou continuez à modifier la liste.',
       });
-      //   setTimeout(() => {
-      //     setExercises([]);
-      //     reset();
-      //     setSelectedOption(options[0]);
-      //   }, 1);
     }
   }, [status, error, setAlert, reset, setSelectedOption, options]);
 

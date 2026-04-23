@@ -1,6 +1,7 @@
 import Button from '@/components/ui/generic/Button';
 import LineGraphExercise from '@/components/ui/specific/LineGraphExercise';
 import { Exercise } from '@/types/apiTypes';
+import { classNames } from '@/utils/classNames';
 import { TrashIcon, ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 
 type Props = {
@@ -29,7 +30,12 @@ const FullExerciseList = (props: Props): React.JSX.Element | null => {
                       isSolutionVisible={true}
                       interactive={false}
                     />
-                    <div className="absolute top-0 left-0 hidden h-full w-full rounded-md bg-black/5 group-hover:block">
+                    <div
+                      className={classNames(
+                        'absolute top-0 left-0 hidden h-full w-full rounded-md group-hover:block',
+                        'pointer-coarse:block pointer-fine:bg-black/5',
+                      )}
+                    >
                       <Button
                         className="absolute top-2 right-2 p-1"
                         withPadding={false}

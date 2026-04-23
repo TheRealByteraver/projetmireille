@@ -32,21 +32,26 @@ const getColumns = (
       id: 'preview',
       header: () => '',
       cell: (info) => (
-        <TextButton color="green" text="Aperçu" onClick={() => presentExerciseList(info.row.original.id)} />
+        <TextButton color="green" text="Aperçu" icon="eye" onClick={() => presentExerciseList(info.row.original.id)} />
       ),
     }),
     columnHelper.display({
       id: 'edit',
       header: () => '',
       cell: (info) => (
-        <TextButton color="yellow" text="Modifier" onClick={() => editExerciseList(info.row.original.id)} />
+        <TextButton color="yellow" text="Modifier" icon="edit" onClick={() => editExerciseList(info.row.original.id)} />
       ),
     }),
     columnHelper.display({
       id: 'delete',
       header: () => '',
       cell: (info) => (
-        <TextButton color="red" text="Supprimer" onClick={() => deleteExerciseList(info.row.original.id)} />
+        <TextButton
+          color="red"
+          text="Supprimer"
+          icon="trash"
+          onClick={() => deleteExerciseList(info.row.original.id)}
+        />
       ),
     }),
   ] as const as ColumnDef<ApiExerciseList>[];

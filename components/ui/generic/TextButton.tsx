@@ -1,15 +1,26 @@
 import { ButtonColors } from '@/types/frontend';
 import { classNames } from '@/utils/classNames';
+import { EyeIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
+
+type Icon = 'eye' | 'edit' | 'trash';
 
 type Props = {
   onClick?: () => void;
   color?: ButtonColors;
   text: string;
+  icon?: Icon;
 };
 
 const TextButton = (props: Props): React.JSX.Element => {
   // PROPS
-  const { onClick, color = 'white', text } = props;
+  const { onClick, color = 'white', text, icon } = props;
+
+  // VARS
+  const icons: Record<Icon, React.ReactNode> = {
+    eye: <EyeIcon className="size-5" />,
+    edit: <PencilSquareIcon className="size-5" />,
+    trash: <TrashIcon className="size-5" />,
+  };
 
   // VARS
   const colors: Record<ButtonColors, string> = {
@@ -22,8 +33,15 @@ const TextButton = (props: Props): React.JSX.Element => {
   };
 
   return (
-    <button className={classNames('py-2 px-4 font-semibold hover:cursor-pointer', colors[color])} onClick={onClick}>
-      {text}
+    <button
+      className={classNames(
+        'flex flex-row items-center gap-2 py-2 font-semibold hover:cursor-pointer sm:px-4',
+        colors[color],
+      )}
+      onClick={onClick}
+    >
+      {icon && icons[icon]}
+      <span className="hidden lg:block">{text}</span>
     </button>
   );
 };
