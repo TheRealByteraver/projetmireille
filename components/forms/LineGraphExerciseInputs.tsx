@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Select from 'react-select';
 
+// TYPES
 type LevelOption = {
   value: ClassLevel;
   label: string;
@@ -21,6 +22,21 @@ type Props = {
   addExercise: (data: LineGraphExerciseType) => void;
 };
 
+// VARS
+const levelOptions: LevelOption[] = [
+  { value: 'CE1', label: 'CE1' },
+  { value: 'CE2', label: 'CE2' },
+];
+
+const stepOptions: StepOption[] = [
+  { value: 1, label: '1' },
+  { value: 2, label: '2' },
+  { value: 5, label: '5' },
+  { value: 10, label: '10' },
+  { value: 100, label: '100' },
+  { value: 1000, label: '1000' },
+];
+
 const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
   // PROPS
   const { addExercise } = props;
@@ -34,7 +50,6 @@ const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
     setValue,
     reset,
     setFocus,
-    trigger,
     formState: { errors },
   } = useForm<LineGraphExerciseType>({
     defaultValues: {
@@ -43,19 +58,16 @@ const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
       questionPosition: 2,
       nrOfSteps: 3,
       level: 'CE1',
-      difficulty: 'easy',
+      // difficulty: 'easy',
     },
   });
   const formValues = watch();
 
   // METHODS
   const onSubmit: SubmitHandler<LineGraphExerciseType> = async (data) => {
-    const isValid = await trigger();
-    if (isValid) {
-      addExercise(data);
-      reset(undefined, { keepValues: true });
-      setFocus('step');
-    }
+    addExercise(data);
+    reset(undefined, { keepValues: true });
+    setFocus('step');
   };
 
   const sanitizeFormValues = (values: LineGraphExerciseType): LineGraphExerciseType => {
@@ -76,21 +88,6 @@ const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
   useEffect(() => {
     if (formValues.questionPosition > formValues.nrOfSteps) setValue('questionPosition', formValues.nrOfSteps);
   }, [formValues.questionPosition, formValues.nrOfSteps, setValue]);
-
-  // VARS
-  const levelOptions: LevelOption[] = [
-    { value: 'CE1', label: 'CE1' },
-    { value: 'CE2', label: 'CE2' },
-  ];
-
-  const stepOptions: StepOption[] = [
-    { value: 1, label: '1' },
-    { value: 2, label: '2' },
-    { value: 5, label: '5' },
-    { value: 10, label: '10' },
-    { value: 100, label: '100' },
-    { value: 1000, label: '1000' },
-  ];
 
   return (
     <>
@@ -131,11 +128,15 @@ const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
         name="step"
         render={({ field }) => (
           <Select
+            ref={field.ref}
             id="step"
             className="mb-6"
             options={stepOptions}
             value={stepOptions.find((option) => option.value === field.value) ?? null}
-            onChange={(option) => field.onChange(option?.value ?? null)}
+            onChange={(option) => {
+              field.onChange(option?.value ?? null);
+              setFocus('startNumber');
+            }}
           />
         )}
       />
@@ -160,6 +161,7 @@ const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
         max={12}
         label="Nombre de pas"
         error={errors.nrOfSteps?.message}
+        required
         {...register('nrOfSteps', {
           valueAsNumber: true,
           required: { value: true, message: 'Le nombre de pas est requis' },
@@ -172,17 +174,20 @@ const LineGraphExerciseInputs = (props: Props): React.JSX.Element => {
         className="mb-6"
         type="number"
         min={1}
-        max={isNaN(formValues.nrOfSteps) ? 1 : Math.min(12, formValues.nrOfSteps)}
         label="Position de la question"
         error={errors.questionPosition?.message}
         {...register('questionPosition', {
           valueAsNumber: true,
           required: { value: true, message: 'La position de la question est requise' },
-          min: { value: 1, message: 'La position de la question ne peut etre inférieure à 1' },
-          max: {
-            value: isNaN(formValues.nrOfSteps) ? 1 : formValues.nrOfSteps,
-            message: 'La position de la question ne peut etre supérieure au nombre de pas',
+          validate: {
+            max: (value) => {
+              if (value > formValues.nrOfSteps) {
+                return 'La position de la question ne peut etre supérieure au nombre de pas';
+              }
+              return true;
+            },
           },
+          min: { value: 1, message: 'La position de la question ne peut etre inférieure à 1' },
         })}
       />
 

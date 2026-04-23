@@ -39,7 +39,7 @@ const LandingPage = (): React.JSX.Element => {
           )}
         </div>
         <p className="my-6 text-center text-gray-500">
-          &quot;Droites numériques&quot; est un projet educatif pour les enfants de 9 à 11 ans.
+          &quot;Droites numériques&quot; est un projet educatif pour les enfants d&apos;école primaire.
         </p>
       </div>
     </div>
